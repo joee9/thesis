@@ -1,4 +1,5 @@
-\documentclass[12pt, twoside, reqno, titlepage]{report}\setlength{\headheight}{15.0pt}
+\documentclass[12pt, twoside, reqno, titlepage]{report}
+\setlength{\headheight}{15.0pt}
 
 \usepackage[margin=1in,centering]{geometry}
 \usepackage[fleqn]{amsmath}
@@ -6,6 +7,9 @@
 \usepackage{amssymb,xparse}
 	\usepackage[makeroom]{cancel} %% \cancelto{value}{expression}
 \usepackage{hyperref}
+\usepackage[style=numeric]{biblatex}
+    \addbibresource{references.bib}
+
 
 % ========== FORMAT FONTS FOR SECTIONS, ETC.
 
@@ -78,7 +82,7 @@
 
 
 
-\title{\fontfamily{phv}\selectfont Simulating Neutron Stars}
+\title{\fontfamily{phv}\selectfont Analysis and derivation of realistic equations of state for neutron star simulations}
 \author{Joseph E. Nyhan, Prof. Ben Kain}
 \date{Spring 2021}
 
@@ -92,7 +96,11 @@
     \newpage
     \pagestyle{special}
 
-    \input{parts/ch1.tex}
+    \input{parts/intro.tex}
+    \input{parts/rmf.tex}
 
+
+    \newpage
+    \printbibliography
 
 \end{document}
