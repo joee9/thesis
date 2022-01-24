@@ -9,6 +9,7 @@
 \usepackage{hyperref}
 \usepackage[style=numeric]{biblatex}
     \addbibresource{references.bib}
+\usepackage{csquotes}
 
 
 % ========== FORMAT FONTS FOR SECTIONS, ETC.
@@ -18,6 +19,7 @@
 \usepackage{titlesec} %% change font size, etc. for built in TeX sections
     \titleformat{\part}[display]{\centering\Huge\fontfamily{phv}\selectfont}{\bfseries Part \thepart}{0pt}{\thispagestyle{empty}}
     \titleformat{\chapter}[display]{\huge\fontfamily{phv}\selectfont}{\bfseries Chapter \thechapter}{0pt}{\thispagestyle{justpage}}
+    % \titleformat*{\chapter}{\huge\fontfamily{phv}\selectfont}
 	\titleformat*{\section}{\fontfamily{phv}\large\bfseries}
 	\titleformat*{\subsection}{\fontfamily{phv}\normalsize\bfseries}
 	% \titleformat{\figure}{\fontfamily{phv}\selectfont\normalsize\bfseries}
@@ -80,7 +82,14 @@
 }
 \lstset{style=py}
 
-
+\usepackage{dutchcal}  %changes \mathcal, \mathbcal for script r (E&M)
+\newcommand{\Letter}[1]{\mathcal{#1}}
+\newcommand{\Lag}{\Letter{L}}
+\newcommand{\Sl}{\ell} % Lowercase script l 
+\newcommand{\Def}{\equiv}
+\newcommand{\goesto}{\quad\Rightarrow\quad}
+\newcommand{\prop}{\propto}
+\newcommand{\p}{\partial}
 
 \title{\fontfamily{phv}\selectfont Analysis and derivation of realistic equations of state for neutron star simulations}
 \author{Joseph E. Nyhan, Prof. Ben Kain}
@@ -99,6 +108,9 @@
     \input{parts/intro.tex}
     \input{parts/rmf.tex}
 
+
+    \appendix
+    \titleformat{\chapter}[display]{\huge\fontfamily{phv}\selectfont}{\bfseries Appendix \thechapter}{0pt}{\thispagestyle{justpage}}
 
     \newpage
     \printbibliography
