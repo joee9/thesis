@@ -4,11 +4,13 @@
 \usepackage[margin=1in,centering]{geometry}
 \usepackage[fleqn]{amsmath}
 \usepackage[italicdiff]{physics}
+\usepackage{siunitx}
 \usepackage{amssymb,xparse}
 	\usepackage[makeroom]{cancel} %% \cancelto{value}{expression}
 \usepackage{hyperref}
 \usepackage[style=numeric]{biblatex}
     \addbibresource{references.bib}
+\usepackage[utf8]{inputenc}
 \usepackage{csquotes}
 
 
@@ -43,7 +45,6 @@
 %\renewcommand{\cftsecfont}{\fontfamily{phv}\selectfont}
 %\renewcommand{\cftsecpagefont}{\fontfamily{phv}\selectfont}
 
-\usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{fancyhdr}
 \fancypagestyle{special} % places section, title, and page number on right of odd pages, and title and page on left of even pages
@@ -68,9 +69,12 @@
 \usepackage{afterpage}
 
 \usepackage{courier}
+\newcommand{\code}[1]{{\fontfamily{pcr}\selectfont #1}}
+
 \usepackage{listings} %% gives environment lstlisting for typing out code
 \usepackage{xcolor}
 \definecolor{codegrey1}{rgb}{0.95,0.95,0.95}
+\definecolor{codegrey2}{rgb}{0.1,0.1,0.1}
 
 \lstdefinestyle{py}{
 	language=Python,
@@ -78,7 +82,10 @@
 	keywordstyle=\bfseries,
 	commentstyle=\itshape,
     backgroundcolor=\color{codegrey1},
-    breaklines=true
+    breaklines=true,
+    numbers=left,
+    numberstyle=\color{codegrey2}\fontfamily{pcr}\selectfont,
+    xleftmargin=18pt
 }
 \lstset{style=py}
 
@@ -90,6 +97,9 @@
 \newcommand{\goesto}{\quad\Rightarrow\quad}
 \newcommand{\prop}{\propto}
 \newcommand{\p}{\partial}
+
+\definecolor{red}{rgb}{1,0,0}
+\newcommand{\JN}[1]{{\color{red} #1}}
 
 \title{\fontfamily{phv}\selectfont Analysis and derivation of realistic equations of state for neutron star simulations}
 \author{Joseph E. Nyhan, Prof. Ben Kain}
@@ -106,6 +116,7 @@
     \pagestyle{special}
 
     \input{parts/intro.tex}
+    \input{parts/tov.tex}
     \input{parts/rmf.tex}
 
 

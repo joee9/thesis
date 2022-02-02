@@ -100,7 +100,7 @@ where $\ket{\Phi}$ represents the ground state. These results arise from arguing
 For the baryon field, a ``normal order'', i.e. normalized, expectation value must be taken, as because otherwise, the vacuum would be taken into account and the traditional expectation value would diverge. This ``normal ordered'' expectation value is denoted with a ``:''. Throughout the equations of motion, the 
 
 \medskip
-MORE HERE.
+\JN{MORE HERE.}
 % simplifications for baryon field
 % derivation of energy momentum tensor and lagrangian for RMF
 % derivation of energy density and pressure from EMT
@@ -109,26 +109,54 @@ MORE HERE.
 
 After evaluating these expectation values, we have
 \begin{align}
-    \phi_0 &= \frac{g_s}{m_s^2} \frac{\gamma}{2\pi^2}\int_0^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}}, \\
-    V_\mu &= \frac{g_v}{m_\omega^2} \rho,
+    \phi_0 &= \frac{g_s}{m_s^2} \frac{\gamma}{2\pi^2}\int_0^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}}, \label{eqn: rmf,phi0} \\
+    V_0 &= \frac{g_v}{m_\omega^2} \rho, \label{eqn: rmf,V0}
 \end{align}
 where once again, $m^* \Def M - g_s \phi$, the \emph{reduced mass}, and $\rho$ is the nucleon number density. If we assume spherical symmetry, a reasonable condition for the study of star-like systems, we get thee following expressions
 \begin{align}
-    \epsilon & = \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2 + \frac{\gamma}{2\pi^2} \int_0^{k_f} \dd{k} k^2 \sqrt{k^2 + m^{*2}}, \\
-    P & = -\frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2 + \frac{1}{3} \pqty{\frac{\gamma}{2\pi^2} \int_0^{k_f} \dd{k}\frac{k^4}{\sqrt{k^2 + m^{*2}}}}.
+    \epsilon & = \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2 + \frac{\gamma}{2\pi^2} \int_0^{k_f} \dd{k} k^2 \sqrt{k^2 + m^{*2}}, \label{eqn: rmf,eps}\\
+    P & = -\frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2 + \frac{1}{3} \pqty{\frac{\gamma}{2\pi^2} \int_0^{k_f} \dd{k}\frac{k^4}{\sqrt{k^2 + m^{*2}}}}. \label{eqn: rmf,p}
 \end{align}
 In the next section, we will use these expressions to generate values for this equation of state.
 
 \section{Numerical generation of the equation of state}
 
-We now wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. To do so, we first wish to find analytical forms for the integrals present in each of those equations, respectively. The aforementioned integrals are the following
-\begin{align}
-    \int_{0}^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}}, \quad\int_{0}^{k_f} \dd{k} \frac{k^4}{\sqrt{k^2 + m^{*2}}},
-    \quad\int_{0}^{k_f} \dd{k} k^2\sqrt{k^2 + m^{*2}}.
-\end{align}
-We integrate each of these using Mathematica, giving it the assumptions that $k_f > 0$ and that $\Re[m^*] > 0$. This gives these explicit, closed forms
-\begin{align}
-    \int_{0}^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}} &= \frac{1}{2} m^* \pqty{k_f \sqrt{k_f^2 + m^{*2}} - m^{*2}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}} \\
-    \int_{0}^{k_f} \dd{k} \frac{k^4}{\sqrt{k^2 + m^{*2}}} &= \frac{1}{8} \pqty{k_f(2k_f^2 - 3m^{*2}) - 3m^{*4}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}}\\
-    \quad\int_{0}^{k_f} \dd{k} k^2\sqrt{k^2 + m^{*2}} &= \frac{1}{8} \pqty{k_f \sqrt{k_f^2 + m^{*2}}\qty(2k_f^2 + m^{*2}) - m^{*4}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}}
-\end{align}
+% We now wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. To do so, we first wish to find analytical forms for the integrals present in each of those equations, respectively. The aforementioned integrals are the following
+% \begin{align}
+%     \int_{0}^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}}, \quad\int_{0}^{k_f} \dd{k} \frac{k^4}{\sqrt{k^2 + m^{*2}}},
+%     \quad\int_{0}^{k_f} \dd{k} k^2\sqrt{k^2 + m^{*2}}.
+% \end{align}
+% We integrate each of these using Mathematica, giving it the assumptions that $k_f > 0$ and that $\Re[m^*] > 0$. This gives these explicit, closed forms
+% \begin{align}
+%     \int_{0}^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}} &= \frac{1}{2} m^* \pqty{k_f \sqrt{k_f^2 + m^{*2}} - m^{*2}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}} \\
+%     \int_{0}^{k_f} \dd{k} \frac{k^4}{\sqrt{k^2 + m^{*2}}} &= \frac{1}{8} \pqty{k_f(2k_f^2 - 3m^{*2}) - 3m^{*4}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}}\\
+%     \quad\int_{0}^{k_f} \dd{k} k^2\sqrt{k^2 + m^{*2}} &= \frac{1}{8} \pqty{k_f \sqrt{k_f^2 + m^{*2}}\qty(2k_f^2 + m^{*2}) - m^{*4}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}}
+% \end{align}
+
+We now wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. Simply, this process requires looping through various values of $k_f$; at each iteration, we find the corresponding value of $\phi_0$ by using a root finding routine on \eqref{eqn: rmf,phi0}, as $m^*$ depends on $\phi_0$, then computing $V_0$ independently using \eqref{eqn: rmf,V0}, and then finally substituting those values into \eqref{eqn: rmf,eps} and \eqref{eqn: rmf,p} and storing those values. After creating a table of values for $\epsilon$ and $P$, we can verify the validity of the equation of state by solving the TOV equations and comparing the results of static solutions, mass-radius curves, and mass-pressure curves to other, previously calculated equations of state.
+
+\medskip
+\begin{itemize}
+\JN{
+    \item This section is rushed. Need better explanations of TOV equations, etc. in a different section; see Chapter 2, the TOV equations section. This can be referenced here.
+    \item Talk about the parameter set for QHD-1.
+}
+\end{itemize}
+\medskip
+
+To begin, we choose a value of $k_f$ for the entirety of the iteration; for sake of example, we take $k_f = 1$. Then, we find the value of $\phi_0$ for that $k_f$ value. We define a function in Python for $\phi_0$ from \eqref{eqn: rmf,phi0}. 
+
+\begin{lstlisting}
+def f_phi0(phi0, kf):
+    mstar = M - g_s * phi0
+    def f(k): # integrand
+        return k**2 * mstar/sqrt(k**2 + mstar**2)
+    integral, err = quad(f,0,kf)
+    return phi0 - (g_s/m_s**2) * (gamma/(2*pi**2)) * integral
+\end{lstlisting}
+
+While most of the function is straight forward, lines 3-5 may be cryptic without context. These lines are responsible for numerically computing the integral at the end of \eqref{eqn: rmf,phi0}, given the current $k_f$ value. \code{f(x)} is simply a function definition for the integrand of that integral, while line 5 uses the SciPy function \code{quad} to numerically integrate \code{f} from $0$ to $k_f$. \code{quad} returns a tuple containing both the numerical value of the integration and the bounds on that value's error, so we unpack it to get the value we want and call it \code{integral}. 
+
+To determine the value of $\phi_0$, we must use a root finding routine because in \eqref{eqn: rmf,phi0}, $\phi_0$ appears on both sides of the equation.
+
+\JN{Unfinished.} Within a tabulated equation of state, we need values for pressure from approximately $\SI{e-14}{}$ to about $\SI{e-1}{}$. When solving for a static solution using the TOV equations, we terminate the integration when the pressure drops below a certain threshold, which in our case is about $\SI{e-11}{}$, so we want values of the equation of state below that point in order to ensure that we calculate the solution correctly as it goes to zero. 
