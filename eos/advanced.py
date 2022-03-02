@@ -155,12 +155,15 @@ def calc_initial_guess(rho):
 
 
 def main():
-    rho = .1
+    rho = .01
     x0 = calc_initial_guess(rho)
     sol = least_squares(ns_system, x0, args=[rho], method='lm')
-    print(sol.x)
+    print(sol.fun)
+
 
 
 
 if __name__ == '__main__':
     main()
+
+# %%
