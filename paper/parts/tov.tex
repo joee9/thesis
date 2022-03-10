@@ -1,34 +1,41 @@
 \chapter{Static Solutions}
 
-Within our study of equations of state, we want to see what predictions each makes about the macroscopic (observable) properties of a neutron star. In order to do so, we introduce the Tolman-Oppenheimer-Volkoff (TOV) equations, a time independent description of a spherically symmetric neutron star. By solving the TOV equations, we can calculate theoretical observables, such as the total mass and radius of an individual star, and compare them to empirical data gathered from real neutron stars. This chapter will introduce the TOV equations, show how they are solved, and how through analysis we can determine the aforementioned observable quantities of note.
+Within our study of equations of state, we want to see which predictions each unique equation makes about the macroscopic (observable) properties of a neutron star. To do so, we introduce the Tolman-Oppenheimer-Volkoff (TOV) equations, a time independent description of a spherically symmetric neutron star. By solving the TOV equations, we can calculate theoretical observables, such as the total mass and radius of an individual star, and compare them to empirical data gathered from real neutron stars. This chapter will introduce the TOV equations, show how they are solved, and how through analysis we can determine the aforementioned observable quantities of note.
 
 \section{The Tolman-Oppenheimer-Volkoff (TOV) Equations}
 
-The Tolman-Oppenheimer-Volkoff (TOV) equations are used to create static, time independent images of a neutron star. The static solutions are described by two variables: \textit{energy density}, $\epsilon$, and \textit{pressure}, $P$. Within this theoretical model, we consider neutron stars to be spherically symmetric, so these variables are simply a function of $r$, the distance from the center of the star, which we explicitly write as $P = P(r)$, $\epsilon = \epsilon(r)$. 
-
-When including the influence of gravity on the star, we work with a parameter $m = m(r)$ that gives the total energy within a radius $r$ of the system. However, due to energy-mass equivalence, it is common to refer to this simply as the total \textit{mass} within a radius $r$. This paper will continue this convention.
-
-Next, we finally show the importance of the equation of state within our neutron calculations. Within this system, the energy density and pressure are related directly by an equation of state $\epsilon = \epsilon(P)$. That is, if we know the value of pressure, we can directly find the value of energy density. Practically, it is also easy to find pressure if we know energy density, however that is not necessary in this calculation.
-
-The TOV equations are given by the coupled differential equations
+The Tolman-Oppenheimer-Volkoff (TOV) equations are the below system of two coupled differential equations
 \begin{align}\label{eqn: tov}
     \dv{m}{r} = 4\pi r^2 \epsilon, \quad \dv{P}{r} = -\frac{(4\pi r^3 P + m)(\epsilon + P)}{r^2 (1-2m/r)}.
 \end{align}
-By solving these equations, we will calculate the static solutions we seek. They will give us three curves: $m(r)$, $\epsilon(r)$, and $P(r)$ that give us information about the star at any desired $r$ value. Of most importance are the pressure and energy density curves, however because they are related by the equation of state, we really only need to find one curve. Importantly, whenever we evaluate the right-hand side of $\dv*{P}{r}$, we use the equation of state $\epsilon(P)$ to determine energy density from the current value of pressure.
+Within these equations, there are four variables of note: the \textit{radius}, $r$, the \textit{mass}, $m$, the \textit{pressure}, $P$, and the \textit{energy density}, $\epsilon$. Within this model, we consider neutron stars to be spherically symmetric; this means that only the distance from the center of the star is important. Furthermore, the radius $r$ is the independent variable; therefore, the other variables can be written as functions of this radius: $m=m(r)$, $P=P(r)$, and $\epsilon=\epsilon(r)$.
 
-To solve the system of equations in \eqref{eqn: tov}, we need will solve an initial value problem; in order to do so, we need initial conditions for both $m$ and $P$ at the center of the star, $r=0$. Determining an initial condition for $m(r=0)$ is straightforward; as $m$ represents the total mass contained within a radius $r$, at the center of the star, as no mass is enclosed, $m(0)=0$. We treat the initial condition for $P$, $P(0)$, called the \textit{central pressure}, as a free parameter. Every static solution is uniquely specified by a value of the central pressure; thus, we simply choose a reasonable value (typically $P(0)$ somewhere between $\SI{e-6}{}$ and $\SI{e-1}{}$) and begin our integration. These initial conditions are summarized as
+The parameter $m$ is defined as the total amount of energy within a spherical shell of radius $r$. Technically, this is not identical to mass; however, due to Einstein's mass-energy equivalence, it is common and convenient to call this parameter mass. This paper will continue this convention. 
+
+% The static solutions are described by two variables: \textit{energy density}, $\epsilon$, and \textit{pressure}, $P$. Within this theoretical model, we consider neutron stars to be spherically symmetric, so these variables are simply a function of $r$, the distance from the center of the star, which we explicitly write as $P = P(r)$, $\epsilon = \epsilon(r)$. 
+
+% When including the influence of gravity on the star, we work with a parameter $m = m(r)$ that gives the total energy within a radius $r$ of the system. However, due to energy-mass equivalence, it is common to refer to this simply as the total \textit{mass} within a radius $r$. This paper will continue this convention.
+
+At this point, we have two variables remaining, yet only one evolution equation. It is here we can finally show the importance of the equation of state within our neutron star calculations. Within this system, the energy density and pressure are related directly by an equation $\epsilon = \epsilon(P)$ known as ``the equation of state'' (EOS). This relationship is important because it allows us to determine the current value of $\epsilon$ if we already know the value of pressure.\footnote{ Practically, it is also easy to find pressure if we know energy density, however that is not necessary in this calculation.} The EOS will be derived and analyzed in depth in the later sections of this paper; at this point, however, it is important to understand that the EOS encodes the interactions between the particles within the neutron star, and based on the model used to describe those interactions, it will change. For this derivation, we leave the EOS as a general function. After including an EOS in our TOV equations, we know just have two variables to evolve: $m$ and $P$.
+
+% By solving these equations, we will calculate the static solutions we seek. They will give us three curves: $m(r)$, $\epsilon(r)$, and $P(r)$ that give us information about the star at any desired $r$ value. Of most importance are the pressure and energy density curves, however because they are related by the equation of state, we really only need to find one curve. Importantly, whenever we evaluate the right-hand side of $\dv*{P}{r}$, we use the equation of state $\epsilon(P)$ to determine energy density from the current value of pressure.
+
+To determine a solution to the system of equations in \eqref{eqn: tov}, we need will solve an initial value problem. As we want to know information about the star from its center radially outward, we therefore need initial conditions for both $m$ and $P$ at the center of the star, $r=0$. Determining an initial condition for $m(r=0)$ is straightforward; as $m$ represents the total mass contained within a radius $r$, at the center of the star, as no mass is enclosed, so $m(0)=0$. We treat the initial condition for $P$, $P(0)$, called the \textit{central pressure}, as a free parameter. Every static solution is uniquely specified by a value of the central pressure; thus, we simply choose a reasonable value (typically $P(0)$ somewhere between $\SI{e-6}{}$ and $\SI{e-1}{}$) and begin our integration. These initial conditions are summarized as
 \begin{align}
     m(0) = 0, \quad P(0) \in [\SI{e-6}{}, \SI{e-1}{}].
 \end{align}
 
-When beginning our integration, we cannot, however, start directly at $r=0$, as the denominator of $\dv*{P}{r}$ in \eqref{eqn: tov} would be undefined. Instead, we simply start at a very small value of $r$, say $r=\SI{e-6}{}$. This is effectively $r=0$, and is accurate enough for our purposes.
+When beginning our integration, we cannot, however, start directly at $r=0$, as the denominator of $\dv*{P}{r}$ in \eqref{eqn: tov} would be undefined. Instead, we simply start at a very small value of $r$, say $r\approx\SI{e-8}{}$. This is effectively $r=0$, and is accurate enough for our purposes.
 
-Our solutions should terminate after we find the outer edge of the star. This radius, $R$, is defined by 
+We want our integration to terminate once we reach the edge of the star, as we are not interested in anything beyond that point. To find this outer edge, we define the total radius of the star, $R$, as the radius when 
 \begin{align}
     P(R) = 0.
 \end{align}
-In practice, once we reach a very small pressure, on the order of $P = \SI{e-12}{}$ or so, we can end the integration. Once we have found the $R$, we can determine the total mass of the star $M = m(R)$, the total mass enclosed at radius $R$. The total mass $M$ and total radius $R$ are important to our analyses of different equations of state, as they represent experimentally observable properties of real neutron stars. These theoretically calculated properties can be compared to observed properties to gauge the validity of any given equation of state.
+In practice, once we reach a very small pressure, $P \sim \SI{e-12}{}$, we can end the integration. Once  have found $R$, we can determine $M = m(R)$, the total mass enclosed at radius $R$. The total mass $M$ and total radius $R$ are important to our analyses of different equations of state, as they represent experimentally observable properties of real neutron stars. These theoretically calculated properties can be compared to observed properties to gauge the validity of any given equation of state.
 
+By determining a solution to the TOV equations, we calculate something called ``static solution,'' a time independent image of a neutron star. A solution contains three curves: $m(r)$, $\epsilon(r)$, and $P(r)$. Of most importance are the pressure and energy density curves, however because they are related by the EOS, we really only need to find one curve.
+
+% Importantly, whenever we evaluate the right-hand side of $\dv*{P}{r}$, we use the equation of state $\epsilon(P)$ to determine energy density from the current value of pressure.
 
 
 
