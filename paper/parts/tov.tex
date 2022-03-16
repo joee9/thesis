@@ -49,6 +49,9 @@ If $y$ is a vector valued function, then each of the $k_i$ values will also be v
 
 For our system of coupled ODEs in \eqref{eqn: tov}, the independent variable is $r$ and our function is the vector is $y = (m, P)$. Using the initial conditions $y_0 = (0, P_0)$ from \eqref{eqn: tov ic}, we can begin our integration from the center of the star and work outwards with step size $h = \Delta r$, a small step in the radial direction. We continually use the newly calculated values of $y$ at some radius $r$ to determine the value of $y(r+\Delta r)$. As we want the integration to terminate when $P$ gets too small, every time we calculate new values, we check to make sure that $P$ is still in an acceptable range, and if it is too small, we terminate.
 
+
+This method allows us to generate static solution curves for various equations of state $\epsilon (P)$ and central pressures $P(0)$. For an equation of state called ``SLy'' from \autocite{SLy_2004} with a central pressure $P(0) = \SI{e-4}{}$, an example of the resulting curves for pressure and energy density are shown in \autoref{fig: SLy static solutions}.
+
 \begin{figure}[h!]
     \centering
     \begin{subfigure}{.5\textwidth}
@@ -61,14 +64,9 @@ For our system of coupled ODEs in \eqref{eqn: tov}, the independent variable is 
     \label{fig: SLy static solutions}
 \end{figure}
 
-This method allows us to generate static solution curves for various equations of state $\epsilon (P)$ and central pressures $P(0)$. For an equation of state called ``SLy'' from \autocite{SLy_2004} with a central pressure $P(0) = \SI{e-4}{}$, an example of the resulting curves for pressure and energy density are shown in \autoref{fig: SLy static solutions}.
+By observation, in \autoref{fig: SLy static solutions}, we can see that the total radius, $R$, is about $\SI{10}{km}$, as this is when the pressure goes to zero. Using this value, we can determine what the total mass is by plugging it into the mass function (not pictured). These values are vital within \autoref{sec: tov,AoSS}.
 
-By observation, in \autoref{fig: SLy static solutions}, we can see that the total radius, $R$, is about $\SI{10}{km}$, as this is when the pressure goes to zero. Using this value, we can determine what the total mass is by plugging it into the mass function (not pictured). These values are vital to the next section.
-
-
-% talk about how we practically implement the TOV equations in python
-
-\section{Analysis of Static Solutions}
+\section{Analysis of Static Solutions}\label{sec: tov,AoSS}
 
 % Using the results from \autoref{sec: tov, computing static solutions}, we can build up a procedure to produce curves that tell us what kinds of stars an equation of state will predict. 
 
@@ -90,7 +88,7 @@ Using these values, we plot two curves: $M$ vs. $P_0$ and $M$ vs. $R$. These are
     \label{fig: tov, SLy mac curves}
 \end{figure}
 
-From these curves, we deduce three special values: the \textit{critical pressure}, the \textit{critical radius}, and the \textit{critical mass}. The critical mass is the maximum mass that the EOS predicts, and the critical pressure and critical radius are the pressure and radius, respectively, where the critical mass is reached. The critical mass and critical radius are used as measuring sticks for how realistic an equation of state is; if they are on the same order as the largest neutron stars that have been actually observed, the equation of state is considered to be a candidate for a ``correct'' description of the star. Usually, the critical mass is on the order of about 2 solar masses, while the critical radius is on the order of about \SI{10}{km}.
+From these curves, we deduce three special values: the \textit{critical pressure}, the \textit{critical radius}, and the \textit{critical mass}. The critical mass is the maximum mass that the EOS predicts, and the critical pressure and critical radius are the pressure and radius, respectively, where the critical mass is reached. The critical mass and critical radius are used as measuring sticks for how realistic an equation of state is; if they are on the same order as the largest neutron stars that have been actually observed, the equation of state is considered to be a candidate for a ``correct'' description of the star. Usually, the critical mass is on the order of about 2 solar masses, while the critical radius is on the order of about \SI{10}{km}. Within the above plots, we have converted the units of radius to \SI{}{km} and the units of mass to \textit{solar masses}, denoted $\odot$, where $\SI{1}{\odot} = \SI{1.989e+30}{kg}.$
 
 In \autocite{SLy_2004}, besides the SLy EOS, there is an additional EOS called FPS, derived and implemented in a similar fashion, just with a different parameterization. Furthermore, in another paper by the same authors, \autocite{BSk_2013}, there are three additional EOSs of similar form. All of these EOSs are considered realistic equations of state and are computed by creating analytical fits from empirical observational data from neutron stars. From previous work, we have these EOSs implemented, so for demonstration, we have overlaid the mass-radius and mass-pressure curves to demonstrate the differences in predictions of different equations of state. These curves are shown in \autoref{fig: tov, all eos analyses}.
 
@@ -102,6 +100,27 @@ In \autocite{SLy_2004}, besides the SLy EOS, there is an additional EOS called F
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{images/tov/r_analysis,all.pdf}
     \end{subfigure}
-    \caption{<caption>}
+    \caption{The mass-central pressure (left) and mass-radius (right) diagrams for the five equations of state from \autocite{SLy_2004,BSk_2013}.}
     \label{fig: tov, all eos analyses}
 \end{figure}
+
+As we can see from looking at these curves, these EOSs produce curves that are qualitatively similar yet with slightly different numerical values. For example, the EOS BSk21 predicts a maximum mass of $\SI{2.26}{\odot}$ and a critical radius of $\SI{10.8}{km}$, while FPS predicts a maximum mass of $\SI{1.80}{\odot}$ with a critical radius of \SI{9.2}{km}, with the predictions of the three other EOSs falling somewhere in between. We see that these five models therefore produce results that are well within the same order of magnitude with similar qualitative features, however their predictions are most definitely the same. As the actual EOS within a neutron star is unknown, these differences are non-trivial and studying them may lead to a better understanding of the real interactions within neutron stars in the future.
+
+\section{Implementation of Static Solutions and Analyses}
+
+During this section, the code given in \autoref{ch: tov code} will be referenced extensively. Any line numbers, unless specified, refer to this code
+
+To begin, we wanted to create a program that would allow for an arbitrary equation of state and central pressure to chosen and would then produce the corresponding static solution. In line 42, the boolean flag \code{make\_static\_solution} selects this mode, and the central pressure specified in line 48 is the central pressure used as an initial condition in the TOV equations. Furthermore, lines 12 through 39 are used to specify which equation of state is to be used.
+
+The EOSs that we use when solving the TOV equations are not actually analytical equations or functions defined within our code. Instead, we have various \code{.txt} files that contain tabulated values of both $\epsilon$ and $P$. When a given EOS is chosen, we read in that text file and use the SciPy function \code{interp1d} to create an ``interpolation function.'' This function takes the $P$ values as independent variables and $\epsilon$ values; then, whenever this function is called throughout the remainder of the code, it will use an interpolation routine to predict an approximate value of $\epsilon$ for an inputted value of $P$. The implementation of this procedure is between lines 70 and 90.\footnote{There are two special EOSs called the ``ultra-relativisitic equation of state'' (UR EOS) and ``polytropic equation of state'' that are purely analytical. As this is the case, in lines 84-90, we choose the analytical equations of state if either the UR or polytropic EOS is chosen, and otherwise we use the interpolating function as described above.}
+
+We also initialize other important parameters. We want to produce static solutions from a minimum $r$ value ($r=0$)\footnote{As mentioned before, we must choose an actual $r_0$ value that is just slightly bigger than 0, as using $r=0$ in \eqref{eqn: tov} would cause the denominator of $\dv*{P}{r}$ to be undefined.} out to a maximum specified value, in this case, $r=200$. Furthermore, we want our points spaced at a regular interval, small enough to give us adequate precision, but not too small as to hinder the code's speed too much. Therefore, we choose our radial step size, \code{dr}, to be $0.02$. Then, we create an array of these $r$ values, spaced out at the desired step size. Finally, we set the initial condition of $m$ to 0. This is all given between lines 56 and 64
+
+After the necessary parameters are initialized, we define the functions necessary for integration. First, on line 101, we define the vector funciton \code{f\_onefluid}, a function of both the independent variable $r$ and vector function $y$. Then, $y$ is unpacked into $m$ and $P$, the equation of state is used to determine $\epsilon$ (or, in the code, called \code{rho}), and finally the right-hand sides of the equations in \eqref{eqn: tov} are evaluated and returned as a tuple. Secondly, we define a function called event, which is also a function of $r$ and $y$. This function compares the current $P$ value to a parameter called \code{p\_tol}; \code{p\_tol} is the smallest effective pressure value for which we consider the pressure to have gone to zero. On line 61, we define this threshold to be \SI{e-11}{}. This function will be used to terminate the integration once we have reached the edge of the star.
+
+Now, on line 115, we begin the integration for our static solution. We open files, with the current parameters we are using (such as the radial step size and central pressure) in the file name. On line 128, we use a SciPy function called \code{solve\_ivp} ro perform the numerical integration (using the Runge-Kutta method) and return an array containing the solutions for both $P$ and $m$. We use \code{solve\_ivp} and do not implement RK4 on our own for speed purposes; \code{solve\_ivp} has special optimizations in regards to step size under the hood that make the calculations more efficient when the values are very large and very small. Importantly, we pass the \code{event} function to \code{solve\_ivp} as a parameter; throughout the integration, \code{solve\_ivp} checks to see if the pressure has dropped below the tolerance, and if it has, it terminates the integration there. Then, we write the static solution to a file, where we fill out any points after the termination but before the $r_\text{max}$ value with zeros. These files are then subsequently read into a different program for plotting, producing the curves like those shown in \autoref{fig: SLy static solutions}.
+
+For the analyses (i.e. producing the mass-radius and mass-pressure curves), we use a similar procedure to that described above, instead we iterate over a wide range of pressure values. If the boolean flag \code{p0\_analysis} is set on line 43, then we will enter the loop on line 149. From there, we loop over all $P_0$ values in the \code{p0\_vals} array, creating a static solution for each and saving the critical mass, critical radius, and critical pressure values to a file. Then after the completion of the loop, we can use an additional program to create a plot. When calculating the critical mass, we use an optimization routine to determine the top of the mass-pressure or mass-radius curve more precisely, and use that calculated critical value to determine the critical radius or pressure, respectively. 
+
+For the remainder of this project, this program will be used to produce the plots and analyses for the equations of state that we derive and produce.
+

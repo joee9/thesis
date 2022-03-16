@@ -38,8 +38,6 @@ if eos_BSk20:
 if eos_BSk21:
     eos = "BSk21"
 
-# eos = "Diener"
-
 # MODES
 make_static_solution = 0
 p0_analysis = 1
@@ -53,7 +51,6 @@ if p0_analysis:
     pmin = 1e-6
     pmax = 1e-1
     NUM_POINTS = 1000
-    # p0_vals = np.arange(1e-6, 1e-1,5e-5)
     p0_vals = np.logspace(round(np.log10(pmin)),round(np.log10(pmax)),NUM_POINTS, base=10.0)
 
 r0 = 0.000001
