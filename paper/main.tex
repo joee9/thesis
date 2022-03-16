@@ -12,6 +12,7 @@
     \addbibresource{references.bib}
 \usepackage[utf8]{inputenc}
 \usepackage{csquotes}
+\usepackage{setspace}
 
 
 % ========== FORMAT FONTS FOR SECTIONS, ETC.
@@ -29,7 +30,9 @@
 	\numberwithin{figure}{chapter}
 	\numberwithin{table}{chapter}
 	
+\usepackage{graphicx}
 \usepackage{caption}
+\usepackage{subcaption}
     \DeclareCaptionFont{helvetica}{\fontfamily{phv}}
     \captionsetup[figure]{labelfont={bf}, font=helvetica, name={Figure}, labelsep=period, width = .8\textwidth}
     \captionsetup[table]{labelfont={bf}, font=helvetica, name={Table}, labelsep=period, width = .8\textwidth}
@@ -115,14 +118,18 @@
     \newpage
     \pagestyle{special}
 
+    % \doublespacing
+
     \input{parts/intro.tex}
     \input{parts/tov.tex}
     \input{parts/rmf.tex}
     \input{parts/advanced.tex}
 
-
+    \singlespacing
     \appendix
     \titleformat{\chapter}[display]{\huge\fontfamily{phv}\selectfont}{\bfseries Appendix \thechapter}{0pt}{\thispagestyle{justpage}}
+
+    \input{parts/code.tex}
 
     \newpage
     \printbibliography
