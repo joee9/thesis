@@ -4,7 +4,6 @@
 #%%
 
 # from numpy import np.pi, np.sqrt
-from re import A
 import numpy as np
 from scipy.integrate import quad
 from scipy.optimize import least_squares
@@ -153,12 +152,77 @@ def calc_initial_guess(rho):
     ])
     
 
+def eps(vec):
+    rho_n, rho_p, rho_e, rho_mu, phi0, V0, b0 = vec
+
+    k_n = k_from_rho(rho_n)
+    k_p = k_from_rho(rho_p)
+    k_e = k_from_rho(rho_e)
+    k_mu = k_from_rho(rho_mu)
+
+    mstar = (M - g_s*phi0)
+
+    first_line = 1/2 * (m_s**2 * phi0**2) + kappa/np.math.factorial(3) * (g_s*phi0)**3 + lmbda/np.math.factorial(4) * (g_s*phi0)**4 - 1/2 *m_omega**2*V0**2 - zeta/np.math.factorial(4) * (g_v*V0)**4
+    second_line = - 1/2 * m_rho**2*b0**2 - Lmbda_v* (g_v*V0)**2*(g_rho*b0)**2 + g_v*V0*(rho_n + rho_p) + 1/2 * g_rho*b0*(rho_p-rho_n)
+    
+    integrand = lambda k, m: k**2 * np.sqrt(k**2 + m**2)
+    
+    first_integral, first_err = quad(integrand, 0,k_p, args=mstar)
+    second_integral, second_err = quad(integrand, 0,k_n, args=mstar)
+    third_integral, third_err = quad(integrand, 0,k_e, args=m_e)
+    fourth_integral, fourth_err = quad(integrand, 0,k_mu, args=m_mu)
+
+    integrals = 1/np.pi**2 * (first_integral + second_integral + third_integral + fourth_integral)
+
+    return first_line + second_line + integrals
+
+def P(vec):
+    rho_n, rho_p, rho_e, rho_mu, phi0, V0, b0 = vec
+
+    k_n = k_from_rho(rho_n)
+    k_p = k_from_rho(rho_p)
+    k_e = k_from_rho(rho_e)
+    k_mu = k_from_rho(rho_mu)
+
+    mstar = (M - g_s*phi0)
+
+    first_line = - 1/2 * (m_s**2 * phi0**2) - kappa/np.math.factorial(3) * (g_s*phi0)**3 - lmbda/np.math.factorial(4) * (g_s*phi0)**4 + 1/2 *m_omega**2*V0**2 + zeta/np.math.factorial(4) * (g_v*V0)**4
+    second_line = + 1/2 * m_rho**2*b0**2 + Lmbda_v* (g_v*V0)**2*(g_rho*b0)**2
+    
+    integrand = lambda k,m: k**4/np.sqrt(k**2 + m**2)
+    integrand_leptons = lambda k, m: k**2 * np.sqrt(k**2 + m**2)
+    
+    first_integral, first_err = quad(integrand, 0,k_p, args=mstar)
+    second_integral, second_err = quad(integrand, 0,k_n, args=mstar)
+    third_integral, third_err = quad(integrand_leptons, 0,k_e, args=m_e)
+    fourth_integral, fourth_err = quad(integrand_leptons, 0,k_mu, args=m_mu)
+
+    integrals = 1/np.pi**2 * (first_integral + second_integral + third_integral + fourth_integral)
+
+    return first_line + second_line + integrals
+
 
 def main():
-    rho = .01
-    x0 = calc_initial_guess(rho)
-    sol = least_squares(ns_system, x0, args=[rho], method='lm')
-    print(sol.fun)
+    rhos = np.logspace(-2,1, 1000, base=10)
+
+    # rhos = [.01,]
+    
+    x0 = calc_initial_guess(rhos[0])
+    epss = []
+    Ps   = []
+
+    for rho in rhos:
+
+        sol = least_squares(ns_system, x0, args=[rho], method='lm')
+        # print(sol.fun)
+        x0 = sol.x
+        Ps.append(P(x0))
+        epss.append(eps(x0))
+    
+    print(Ps, epss)
+    
+    
+    
 
 
 

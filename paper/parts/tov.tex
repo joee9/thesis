@@ -1,4 +1,4 @@
-\chapter{Static Solutions}
+\chapter{Static Solutions}\label{ch: static solutions}
 
 Within our study of equations of state, we want to see which predictions each unique equation makes about the macroscopic (observable) properties of a neutron star. To do so, we introduce the Tolman-Oppenheimer-Volkoff (TOV) equations, a time independent description of a spherically symmetric neutron star. By solving the TOV equations, we can calculate theoretical observables, such as the total mass and radius of an individual star, and compare them to empirical data gathered from real neutron stars. This chapter will introduce the TOV equations, show how they are solved, and how through analysis we can determine the aforementioned observable quantities of note.
 
@@ -122,5 +122,5 @@ Now, on line 115, we begin the integration for our static solution. We open file
 
 For the analyses (i.e. producing the mass-radius and mass-pressure curves), we use a similar procedure to that described above, instead we iterate over a wide range of pressure values. If the boolean flag \code{p0\_analysis} is set on line 43, then we will enter the loop on line 149. From there, we loop over all $P_0$ values in the \code{p0\_vals} array, creating a static solution for each and saving the critical mass, critical radius, and critical pressure values to a file. Then after the completion of the loop, we can use an additional program to create a plot. When calculating the critical mass, we use an optimization routine to determine the top of the mass-pressure or mass-radius curve more precisely, and use that calculated critical value to determine the critical radius or pressure, respectively. 
 
-For the remainder of this project, this program will be used to produce the plots and analyses for the equations of state that we derive and produce.
+For the remainder of this project, this program will be used to produce the plots and analyses for the equations of state that we derive.
 
