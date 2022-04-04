@@ -1,0 +1,67 @@
+\documentclass[fleqn,handout]{beamer}
+    \usetheme{Boadilla}
+    \usecolortheme{beaver}
+
+% \usepackage[fleqn]{amsmath}
+\usepackage[italicdiff]{physics}
+\usepackage{siunitx}
+\usepackage{amssymb,xparse}
+	\usepackage[makeroom]{cancel} %% \cancelto{value}{expression}
+
+\usepackage{graphicx}
+
+\usepackage{dutchcal}  %changes \mathcal, \mathbcal for script r (E&M)
+\newcommand{\Letter}[1]{\mathcal{#1}}
+\newcommand{\Lag}{\Letter{L}}
+\newcommand{\Sl}{\ell} % Lowercase script l 
+\newcommand{\Def}{\equiv}
+\newcommand{\goesto}{\quad\Rightarrow\quad}
+\newcommand{\prop}{\propto}
+\newcommand{\p}{\partial}
+
+\title{Analysis of Equations of State for Neutron Star Modelling}
+\author{Joseph Nyhan}
+\date{April 5, 2022}
+\institute{College of the Holy Cross}
+
+\begin{document}
+
+    \maketitle
+
+    \begin{frame}{Outline}
+        \begin{itemize}
+            \item What is an equation of state (EoS)? \pause How do they fit into our model of a neutron star? \pause
+            \item Using an Eos to make macroscopic predictions \pause
+            \item Analysis and derivation of two EoSs: \pause
+            \begin{itemize}
+                \item QHD-I \pause
+                \item NL3
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Equation of State (EoS)}
+        \begin{itemize}
+            \item A relationship between \textit{energy density} (denoted $\epsilon$) \pause and pressure (denoted $P$) \pause \begin{itemize}
+                \item $\epsilon = \epsilon (P)$\pause $~~ \Leftrightarrow ~~  P = P(\epsilon)$
+            \end{itemize}
+            \item Encodes the fundamental interparticle interactions within a neutron star \pause
+            \item True EoS within a neutron star is unknown; \pause multitude of candidates, each based on a slightly different model
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Using an Equation of State to Make Predictions}
+        \begin{itemize}
+            \item TOV equations \pause
+            \item Mass rad
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{TOV Equations}
+        \begin{itemize}
+            \item The Tolman-Oppenheimer-Volkoff Equations
+        \end{itemize}
+    \end{frame}
+
+\end{document}
+

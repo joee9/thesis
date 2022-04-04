@@ -202,32 +202,31 @@ def P(vec):
     return first_line + second_line + integrals
 
 
-def main():
-    rhos = np.logspace(-2,1, 1000, base=10)
+rhos = np.logspace(-2,1, 1000, base=10)
 
-    # rhos = [.01,]
-    
-    x0 = calc_initial_guess(rhos[0])
-    epss = []
-    Ps   = []
+rhos = [1e-2,2e-2]
 
-    for rho in rhos:
+x0 = calc_initial_guess(rhos[0])
+epss = []
+Ps   = []
 
-        sol = least_squares(ns_system, x0, args=[rho], method='lm')
-        # print(sol.fun)
-        x0 = sol.x
-        Ps.append(P(x0))
-        epss.append(eps(x0))
-    
-    print(Ps, epss)
-    
+for rho in rhos:
+
+    sol = least_squares(ns_system, x0, args=[rho], method='lm')
+    print(sol.fun)
+    x0 = sol.x
+    Ps.append(P(x0))
+    epss.append(eps(x0))
+
+print(Ps[0],epss[0])
     
     
+    
 
 
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
 
 # %%
