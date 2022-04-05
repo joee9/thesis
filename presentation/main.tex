@@ -1,5 +1,5 @@
-\documentclass[handout]{beamer}
-% \documentclass[]{beamer}
+% \documentclass[handout]{beamer}
+\documentclass[]{beamer}
     \usetheme{Boadilla}
     \usecolortheme{beaver}
 
@@ -34,11 +34,31 @@
     \begin{frame}{Outline}
         \pause
         \begin{itemize}
+            \item What is a neutron star? \pause
             \item What is an equation of state (EoS)? \pause How do they fit into our model of a neutron star? \pause
             \item How can we use an EoS to make macroscopic predictions about neutron stars? \pause
             \item An example and its predictions: \pause
             \begin{itemize}
                 \item QHD-I
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Neutron Stars}
+        \pause
+        \begin{itemize}
+            \item The collapsed core of a supergiant stars \pause
+            \item After a supernovae explosion, the dense core is left over \pause
+            \item Radius: $\sim\SI{10}{km}$\pause ; Mass: $\sim\SI{1}{\odot}$. \pause
+            \item Made mostly of neutrons, protons, and electrons\pause ; overall, is neutral \pause
+            \item Core held together by intense gravitational attraction \pause
+            \begin{itemize}
+                \item Gravitational acceleration on Earth's Surface: $\approx \SI{10}{m/s^2}$ \pause
+                \item Neutron star: $\approx \SI{e12}{m/s^2}$ \pause (escape velocity $\sim \SI{100000}{km/s} = $ \pause $c/3$)\pause
+            \end{itemize}
+            \item Why are they interesting? \pause \begin{itemize}
+                \item Smallest, densest observed stellar objects \pause
+                \item Exotic physics
             \end{itemize}
         \end{itemize}
     \end{frame}
@@ -51,9 +71,12 @@
             \end{itemize}
             \item Encodes the fundamental interparticle interactions within a neutron star \pause
             \item True EoS within a neutron star is unknown; \pause multitude of candidates, each based on a slightly different model \pause \begin{itemize}
-                \item Models can be very complicated\pause ; often simplifications must be made
+                \item Models can be very complicated\pause ; often simplifications must be made \pause
             \end{itemize}
-
+        \end{itemize}
+        Making predictions with an EoS \pause
+        \begin{itemize}
+            \item Solve a system of equations to produce an ``image'' of a neutron star \pause
         \end{itemize}
     \end{frame}
 
@@ -147,7 +170,7 @@
         \begin{itemize}
             \item Formulation of nuclear interactions between \textit{baryons} by the exchange of \textit{mesons} \pause \begin{itemize}
                 \item \textit{baryons} are particles containing three quarks (e.g. protons, neutrons) \pause
-                \item \textit{mesons} are quark/anti-quark pairs \pause
+                \item \textit{mesons} are quark/anti-quark pairs\pause
             \end{itemize}
             \item Requires experimental input for constraint; \pause implemented using \textit{coupling constants} \pause \begin{itemize}
                 \item Multiple \textit{parameter sets} have been developed by fitting observed nuclear properties of nuclear matter \pause
@@ -172,20 +195,22 @@
     \end{frame}
 
     \begin{frame}{RMF Simplifications}
-        \textit{INCLUDE MOTIVATION FOR RMF SIMPLIFICATIONS HERE.}
-        \bigskip
-
-        This allows us to simplify $\Lag$ considerably: \pause
+        We introduce the \textit{Relativistic Mean Field} (RMF) simplifications. \pause We treat the meson fields as their average value: \pause
+        \[\phi \to \expval{\phi} = \phi_0, \quad V_\mu \to \expval{V_\mu} = V_0,\]
+        where $\phi_0$ and $V_0$ are constants. \pause This allows us to simplify $\Lag$ considerably: \pause
         \begin{align*}
             \Lag_\text{RMF} = \bar\psi \bqty{i\gamma_\mu\p^\mu - g_v \gamma_0 V_0 - (M-g_s\phi_0)} \psi - \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2,
-        \end{align*}
-
+        \end{align*} \pause
+        Determining $\phi_0$, $V_0$, $\epsilon$, and $P$: \pause $\quad\varphi_\alpha \in \Bqty{\phi_0, V_0, \psi}$
+        \[\p_\nu\qty(\pdv{\Lag}{(\p_\nu \varphi_\alpha)}) - \pdv{\Lag}{\varphi_\alpha} = 0, \quad
+        T^{\mu\nu} = \pdv{\Lag}{(\p_\mu \varphi_\alpha)}\p^\nu \varphi_\alpha - \Lag \eta^{\mu\nu}.\] \pause
+        $$\epsilon = \expval{T^{00}}, \quad P = \expval{T^{ii}}$$
     \end{frame}
 
     \begin{frame}{Resulting Equations}
-        From $\Lag_\text{RMF}$ and the other RMF simplifications, we obtain the following equations: \pause
+        From above, we obtain the following equations: \pause
         \begin{align*}
-            \phi_0 &= \frac{g_\phi}{m_\phi^2} \frac{\gamma}{2\pi^2}\int_0^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}},  \\
+            \phi_0 &= \frac{g_\phi}{m_\phi^2} \frac{1}{\pi^2}\int_0^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}},  \\
             V_0 &= \frac{g_v}{m_v^2} \frac{k_f^3}{3\pi^2}, \\
             \epsilon & = \frac{1}{2} m_\phi^2 \phi_0^2 + \frac{1}{2} m_v^2 V_0^2 + \frac{1}{\pi^2} \int_0^{k_f} \dd{k} k^2 \sqrt{k^2 + m^{*2}},\\
             P & = -\frac{1}{2} m_\phi^2 \phi_0^2 + \frac{1}{2} m_v^2 V_0^2 + \frac{1}{3} \pqty{\frac{1}{\pi^2} \int_0^{k_f} \dd{k}\frac{k^4}{\sqrt{k^2 + m^{*2}}}}.
