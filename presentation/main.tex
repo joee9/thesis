@@ -74,10 +74,6 @@
                 \item Models can be very complicated\pause ; often simplifications must be made \pause
             \end{itemize}
         \end{itemize}
-        Making predictions with an EoS \pause
-        \begin{itemize}
-            \item Solve a system of equations to produce an ``image'' of a neutron star \pause
-        \end{itemize}
     \end{frame}
 
     % \begin{frame}{Using an Equation of State to Make Predictions}
@@ -87,28 +83,31 @@
     %     \end{itemize}
     % \end{frame}
 
-    \begin{frame}{The Tolman-Oppenheimer-Volkoff (TOV) Equations}
-        \pause Used to describe a static (time independent) spherically symmetric neutron star. \pause Given by
-        \begin{align*}
-            \dv{m}{r} = 4\pi r^2 \epsilon, \quad \dv{P}{r} = -\frac{(4\pi r^3 P + m)(\epsilon + P)}{r^2 (1-2m/r)}.
-        \end{align*}
-        where $\epsilon$ is energy density, $P$ is pressure, and $m$ is mass. \pause Use EoS to determine $\epsilon~$\pause $=\epsilon(P)$. \pause Initial conditions: \pause
-        \[m(r=0) = 0, \quad P(r=0) \Def P_0 = \text{const.}\]\pause
-        Each solution uniquely specified by $P_0$. \pause Outer conditions: \pause \textit{radius} of the star, $R$\pause , and \textit{mass} of the star, $M$\pause , defined by \[P(R) = 0, \quad M = m(R).\] \pause
-        Solve an \textit{initial value problem}. \pause A solution to the above system is called a \textit{static solution}.         % \begin{itemize}
-        %     \item System of two coupled ordinary differential equations (ODEs) \pause
-        %     \item Solve using a numerical integration technique \pause
-        %     \item Solution called a ``static solution''
-        % \end{itemize}
-    \end{frame}
+    % \begin{frame}{The Tolman-Oppenheimer-Volkoff (TOV) Equations}
+    %     \pause Used to describe a static (time independent) spherically symmetric neutron star. \pause Given by
+    %     \begin{align*}
+    %         \dv{m}{r} = 4\pi r^2 \epsilon, \quad \dv{P}{r} = -\frac{(4\pi r^3 P + m)(\epsilon + P)}{r^2 (1-2m/r)}.
+    %     \end{align*}
+    %     where $\epsilon$ is energy density, $P$ is pressure, and $m$ is mass. \pause Use EoS to determine $\epsilon~$\pause $=\epsilon(P)$. \pause Initial conditions: \pause
+    %     \[m(r=0) = 0, \quad P(r=0) \Def P_0 = \text{const.}\]\pause
+    %     Each solution uniquely specified by $P_0$. \pause Outer conditions: \pause \textit{radius} of the star, $R$\pause , and \textit{mass} of the star, $M$\pause , defined by \[P(R) = 0, \quad M = m(R).\] \pause
+    %     Solve an \textit{initial value problem}. \pause A solution to the above system is called a \textit{static solution}.         % \begin{itemize}
+    %     %     \item System of two coupled ordinary differential equations (ODEs) \pause
+    %     %     \item Solve using a numerical integration technique \pause
+    %     %     \item Solution called a ``static solution''
+    %     % \end{itemize}
+    % \end{frame}
 
     \begin{frame}{Static Solutions}
         \pause
-        Creating a static solution:\pause
-        \begin{enumerate}
-            \item specify a $P_0$ value, the \textit{central pressure}\pause
-            \item use a numerical integration technique to determine a solution \pause (e.g. Runge-Kutta, Euler's method). \pause Terminate once the outer condition is satisfied. \pause Use EoS at each step to determine $\epsilon$. \pause
-        \end{enumerate}
+        \begin{itemize}
+            \item Solve a system of equations to produce an ``image'' of a neutron star \pause
+            \begin{itemize}
+                \item Called the Tolman-Oppenheimer-Volkoff (TOV) equations \pause
+            \end{itemize}
+            \item Specify an EoS and a \textit{central pressure} $P_0$ and get curves describing $\epsilon$, $P$, and $m$. \pause 
+            \item A solution is known as a \textit{static solution}\pause ; spherically symmetric\pause
+        \end{itemize}
 
         \begin{figure}[h!]
             \centering
