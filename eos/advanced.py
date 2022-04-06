@@ -68,7 +68,6 @@ def rho_from_k(k):
     return k**3/(3*np.pi**2)
 
 def ns_system(vec, rho):
-    # k_n, k_p, k_e, k_mu, 
     rho_n, rho_p, rho_e, rho_mu, phi0, V0, b0 = vec
 
     k_n = k_from_rho(rho_n)
@@ -76,15 +75,14 @@ def ns_system(vec, rho):
     k_e = k_from_rho(rho_e)
     k_mu = k_from_rho(rho_mu)
 
-    mu_e = np.sqrt(k_e**2 + m_e**2)
     mu_mu = np.sqrt(k_mu**2 + m_mu**2)
-
+    mu_e = np.sqrt(k_e**2 + m_e**2)
+    
     mstar = (M - g_s*phi0)
 
     f = lambda k: (k**2*mstar)/np.sqrt(k**2 + mstar**2)
     p_int, p_err = quad(f,0,k_p)
     n_int, n_err = quad(f,0,k_n)
-
 
     return np.array([
         rho - (rho_n + rho_p), # conservation of baryon number density
@@ -95,6 +93,29 @@ def ns_system(vec, rho):
         V0 - g_v/m_omega**2 * (rho_p + rho_n - zeta/6 * (g_v * V0)**3 - 2*Lmbda_v*(g_v * V0)*(g_rho * b0)**2),
         b0 - g_rho/m_rho**2 * (1/2 * (rho_p - rho_n) - 2*Lmbda_v*(g_v * V0)**2*(g_rho * b0))
     ])
+
+def ns_system_no_muons(vec, rho):
+    rho_n, rho_p, rho_e, phi0, V0, b0 = vec
+
+    k_n = k_from_rho(rho_n)
+    k_p = k_from_rho(rho_p)
+    k_e = k_from_rho(rho_e)
+
+    mstar = (M - g_s*phi0)
+
+    f = lambda k: (k**2*mstar)/np.sqrt(k**2 + mstar**2)
+    p_int, p_err = quad(f,0,k_p)
+    n_int, n_err = quad(f,0,k_n)
+
+    return np.array([
+        rho - (rho_n + rho_p), # conservation of baryon number density
+        np.sqrt(k_n**2 + mstar**2) - (np.sqrt(k_p**2 + mstar**2) + g_rho*b0 + np.sqrt(k_e**2 + m_e**2)), # beta equilibrium condition
+        k_p - k_e**3, # charge equilibrium
+        phi0 -  g_s/(m_s**2) * (1/np.pi**2 * (p_int + n_int) -kappa/2 * (g_s * phi0)**2 - lmbda/6 * (g_s * phi0)**3), # phi0 equation
+        V0 - g_v/m_omega**2 * (rho_p + rho_n - zeta/6 * (g_v * V0)**3 - 2*Lmbda_v*(g_v * V0)*(g_rho * b0)**2),
+        b0 - g_rho/m_rho**2 * (1/2 * (rho_p - rho_n) - 2*Lmbda_v*(g_v * V0)**2*(g_rho * b0))
+    ])
+
 
 def calc_initial_guess(rho):
     phi0 = g_s / (m_s)**2 * rho
@@ -136,7 +157,11 @@ def calc_initial_guess(rho):
     
 
 def eps(vec):
-    rho_n, rho_p, rho_e, rho_mu, phi0, V0, b0 = vec
+    if len(vec) == 6:
+        rho_n, rho_p, rho_e, phi0, V0, b0 = vec
+        rho_mu = 0
+    else:
+        rho_n, rho_p, rho_e, rho_mu, phi0, V0, b0 = vec
 
     k_n = k_from_rho(rho_n)
     k_p = k_from_rho(rho_p)
@@ -160,7 +185,11 @@ def eps(vec):
     return first_line + second_line + integrals
 
 def P(vec):
-    rho_n, rho_p, rho_e, rho_mu, phi0, V0, b0 = vec
+    if len(vec) == 6:
+        rho_n, rho_p, rho_e, phi0, V0, b0 = vec
+        rho_mu = 0
+    else:
+        rho_n, rho_p, rho_e, rho_mu, phi0, V0, b0 = vec
 
     k_n = k_from_rho(rho_n)
     k_p = k_from_rho(rho_p)
@@ -188,7 +217,11 @@ def P(vec):
 #%%
 
 # rhos = np.logspace(-1,-5, 1000, base=10)
-rho_exp = np.linspace(-1,-5,5000)
+upper = -1
+lower = -10
+density = 1000
+rho_exp = np.linspace(upper,lower,(upper-lower)*density)
+
 
 # rhos = [.01]
 # rhos = [.1,] # look for P = eps = 1.4
@@ -199,15 +232,37 @@ x0 = [.2, .2, .2, .2, .2, .2, .2]
 print(x0)
 vals = []
 
-for exp in rho_exp:
+n = -1
+for i, exp in enumerate(rho_exp):
+
+    if i % 100 == 0: print(i)
     rho = 10**(exp)
 
+    if x0[3] <= 1e-12:
+        n = i
+        break
+
     sol = least_squares(ns_system, x0, args=[rho], method='lm')
-    # print(sol.fun)
+
     x0 = sol.x
     vals.append([rho, P(x0), eps(x0)])
 
-print(np.array(vals))
-    
-# %%
-print(np.array(vals))
+x0 = x0[0], x0[1], x0[2], x0[4], x0[5], x0[6]
+
+for i in range(n, len(rho_exp)):
+
+    if i % 100 == 0: print(i)
+
+    exp = rho_exp[i]
+    rho = 10**(exp)
+    sol = least_squares(ns_system_no_muons, x0, args=[rho], method='lm')
+
+    x0 = sol.x
+    vals.append([rho, P(x0), eps(x0)])
+
+
+#%%
+
+with open('./test.txt', 'w') as f:
+    for val in vals:
+        f.write(f'{val}\n')
