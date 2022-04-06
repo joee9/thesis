@@ -110,7 +110,7 @@ def ns_system_no_muons(vec, rho):
     return np.array([
         rho - (rho_n + rho_p), # conservation of baryon number density
         np.sqrt(k_n**2 + mstar**2) - (np.sqrt(k_p**2 + mstar**2) + g_rho*b0 + np.sqrt(k_e**2 + m_e**2)), # beta equilibrium condition
-        k_p - k_e**3, # charge equilibrium
+        k_p - k_e, # charge equilibrium
         phi0 -  g_s/(m_s**2) * (1/np.pi**2 * (p_int + n_int) -kappa/2 * (g_s * phi0)**2 - lmbda/6 * (g_s * phi0)**3), # phi0 equation
         V0 - g_v/m_omega**2 * (rho_p + rho_n - zeta/6 * (g_v * V0)**3 - 2*Lmbda_v*(g_v * V0)*(g_rho * b0)**2),
         b0 - g_rho/m_rho**2 * (1/2 * (rho_p - rho_n) - 2*Lmbda_v*(g_v * V0)**2*(g_rho * b0))
