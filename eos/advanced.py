@@ -218,10 +218,11 @@ def P(vec):
 
 # rhos = np.logspace(-1,-5, 1000, base=10)
 upper = -1
-lower = -10
+lower = -5
 density = 1000
 rho_exp = np.linspace(upper,lower,(upper-lower)*density)
 
+output = open('./0-NL3_vals.vals', 'w')
 
 # rhos = [.01]
 # rhos = [.1,] # look for P = eps = 1.4
@@ -245,7 +246,9 @@ for i, exp in enumerate(rho_exp):
     sol = least_squares(ns_system, x0, args=[rho], method='lm')
 
     x0 = sol.x
-    vals.append([rho, P(x0), eps(x0)])
+    output.write(f'{eps(x0):.16e}, {P(x0):.16e}\n')
+
+    # vals.append([rho, P(x0), eps(x0)])
 
 x0 = x0[0], x0[1], x0[2], x0[4], x0[5], x0[6]
 
@@ -258,11 +261,13 @@ for i in range(n, len(rho_exp)):
     sol = least_squares(ns_system_no_muons, x0, args=[rho], method='lm')
 
     x0 = sol.x
-    vals.append([rho, P(x0), eps(x0)])
+    output.write(f'{eps(x0):.16e}, {P(x0):.16e}\n')
+
+output.close()
 
 
 #%%
 
-with open('./test.txt', 'w') as f:
-    for val in vals:
-        f.write(f'{val}\n')
+# with open('./test.txt', 'w') as f:
+#     for val in vals:
+#         f.write(f'{val[2], val[1]}\n')
