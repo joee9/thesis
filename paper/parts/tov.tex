@@ -8,26 +8,26 @@ The Tolman-Oppenheimer-Volkoff (TOV) equations are the below system of two coupl
 \begin{align}\label{eqn: tov}
     \dv{m}{r} = 4\pi r^2 \epsilon, \quad \dv{P}{r} = -\frac{(4\pi r^3 P + m)(\epsilon + P)}{r^2 (1-2m/r)}.
 \end{align}
-Within these equations, there are four variables of note: the \textit{radius}, $r$, the \textit{mass}, $m$, the \textit{pressure}, $P$, and the \textit{energy density}, $\epsilon$. Within this model, we consider neutron stars to be spherically symmetric; this means that only the distance from the center of the star is important. Furthermore, the radius $r$ is the independent variable; therefore, the other variables can be written as functions of this radius: $m=m(r)$, $P=P(r)$, and $\epsilon=\epsilon(r)$.
+Within these equations, there are four important variables: the \textit{radial coordinate}, $r$, the \textit{mass}, $m$, the \textit{pressure}, $P$, and the \textit{energy density}, $\epsilon$. Within this model, we consider neutron stars to be spherically symmetric; this means that only the distance from the center of the star is important. Furthermore, the radius $r$ is the independent variable; therefore, the other variables can be written as functions of this radius: $m=m(r)$, $P=P(r)$, and $\epsilon=\epsilon(r)$.
 
 The parameter $m$ is defined as the total amount of energy within a spherical shell of radius $r$. Technically, this is not identical to mass; however, due to Einstein's mass-energy equivalence, it is common and convenient to call this parameter mass. This paper will continue this convention. 
 
-At this point, we have two variables remaining, yet only one evolution equation. It is here we can finally show the importance of the equation of state within our neutron star calculations. Within this system, the energy density and pressure are related directly by an equation $\epsilon = \epsilon(P)$ known as ``the equation of state'' (EOS). This relationship is important because it allows us to determine the current value of $\epsilon$ if we already know the value of pressure.\footnote{ Practically, it is also easy to find pressure if we know energy density, however that is not necessary in this calculation.} The EOS will be derived and analyzed in depth in the later sections of this paper; at this point, however, it is important to understand that the EOS encodes the interactions between the particles within the neutron star, and based on the model used to describe those interactions, it will change. For this derivation, we leave the EOS as a general function. After including an EOS in our TOV equations, we know just have two variables to evolve: $m$ and $P$.
+At this point, we have two variables remaining, yet only one unaccounted for equation in this system. It is here we can finally show the importance of the equation of state within our neutron star calculations. Within this system, the energy density and pressure are related directly by an equation $\epsilon = \epsilon(P)$ known as ``the equation of state'' (EOS). This relationship is important because it allows us to determine the current value of $\epsilon$ if we already know the value of pressure.\footnote{ Practically, it is also easy to find pressure if we know energy density, however that is not necessary in this calculation.} The EOS will be derived and analyzed in depth in the later sections of this paper; at this point, however, it is important to understand that the EOS encodes the interactions between the particles within the neutron star, and based on the model used to describe those interactions, it will change. For this derivation, we leave the EOS as a general function. After including an EOS in our TOV equations, we now just have two variables to evolve: $m$ and $P$.
 
-To determine a solution to the system of equations in \eqref{eqn: tov}, we need will solve an initial value problem. As we want to know information about the star from its center radially outward, we therefore need initial conditions for both $m$ and $P$ at the center of the star, $r=0$. Determining an initial condition for $m(r=0)$ is straightforward; as $m$ represents the total mass contained within a radius $r$, at the center of the star, as no mass is enclosed, so $m(0)=0$. We treat the initial condition for $P$, $P(0)$, called the \textit{central pressure}, as a free parameter. Every static solution is uniquely specified by a value of the central pressure; thus, we simply choose a reasonable value (typically $P(0)$ somewhere between $\SI{e-6}{}$ and $\SI{e-1}{}$) and begin our integration. These initial conditions are summarized as
+To determine a solution to the system of equations in \eqref{eqn: tov}, we need will solve an initial value problem. As we want to know information about the star from its center radially outward, we therefore need initial conditions for both $m$ and $P$ at the center of the star, $r=0$. Determining an initial condition for $m(r=0)$ is straightforward; as $m$ represents the total mass contained within a radius $r$, at the center of the star, as no mass is enclosed, so $m(0)=0$. We treat the initial condition for $P$, $P(0)$, called the \textit{central pressure}, as a free parameter. Every static solution is uniquely specified by a value of the central pressure; thus, we simply choose a reasonable value (typically $P(0)$ somewhere between $\SI{e-6}{GeV^4}$ and $\SI{e-1}{GeV^4}$) and begin our integration. These initial conditions are summarized as
 \begin{align}\label{eqn: tov ic}
-    m(0) = 0, \quad P(0) \in [\SI{e-6}{}, \SI{e-1}{}].
+    m(0) = 0, \quad P(0) \in [\SI{e-6}{GeV^4}, \SI{e-1}{GeV^4}].
 \end{align}
 
-When beginning our integration, we cannot, however, start directly at $r=0$, as the denominator of $\dv*{P}{r}$ in \eqref{eqn: tov} would be undefined. Instead, we simply start at a very small value of $r$, say $r\approx\SI{e-8}{}$. This is effectively $r=0$, and is accurate enough for our purposes.
+When beginning our integration, we cannot, however, start directly at $r=0$, as $\dv*{P}{r}$ has terms containing $1/r$. To determine $\dv*{P}{r}$ at $r=0$, we would need to take a limit; however, numerically, we can avoid this by starting at very small $r$. Therefore, we simply start at a tiny value of $r$, say $r\approx\SI{e-8}{}$. This effectively approximates the limit and is accurate enough for our purposes.
 
 We want our integration to terminate once we reach the edge of the star, as we are not interested in anything beyond that point. To find this outer edge, we define the total radius of the star, $R$, as the radius when 
 \begin{align}
     P(R) = 0.
 \end{align}
-In practice, once we reach a very small pressure, $P \sim \SI{e-12}{}$, we can end the integration. Once  have found $R$, we can determine $M = m(R)$, the total mass enclosed at radius $R$. The total mass $M$ and total radius $R$ are important to our analyses of different equations of state, as they represent experimentally observable properties of real neutron stars. These theoretically calculated properties can be compared to observed properties to gauge the validity of any given equation of state.
+In practice, once we reach a very small pressure, $P \sim \SI{e-12}{}$, we can end the integration. Once we have found $R$, we can determine $M = m(R)$, the total mass enclosed at radius $R$. The total mass $M$ and total radius $R$ are important to our analyses of different equations of state, as they represent experimentally observable properties of real neutron stars. These theoretically calculated properties can be compared to observed properties to gauge the validity of any given equation of state.
 
-By determining a solution to the TOV equations, we calculate something called ``static solution,'' a time independent image of a neutron star. A solution contains three curves: $m(r)$, $\epsilon(r)$, and $P(r)$. Of most importance are the pressure and energy density curves; however because they are related by the EOS, we only need to save one curve, as we can simply calculate the other when desired.
+By determining a solution to the TOV equations, we calculate something called a ``static solution,'' a time independent description of a neutron star. A solution contains three curves: $m(r)$, $\epsilon(r)$, and $P(r)$. Of most importance are the pressure and energy density curves; however because they are related by the EOS, we only need to save one curve, as we can simply calculate the other when desired.
 
 
 \section{Computing Static Solutions}\label{sec: tov, computing static solutions}
@@ -50,17 +50,17 @@ If $y$ is a vector valued function, then each of the $k_i$ values will also be v
 For our system of coupled ODEs in \eqref{eqn: tov}, the independent variable is $r$ and our function is the vector is $y = (m, P)$. Using the initial conditions $y_0 = (0, P_0)$ from \eqref{eqn: tov ic}, we can begin our integration from the center of the star and work outwards with step size $h = \Delta r$, a small step in the radial direction. We continually use the newly calculated values of $y$ at some radius $r$ to determine the value of $y(r+\Delta r)$. As we want the integration to terminate when $P$ gets too small, every time we calculate new values, we check to make sure that $P$ is still in an acceptable range, and if it is too small, we terminate.
 
 
-This method allows us to generate static solution curves for various equations of state $\epsilon (P)$ and central pressures $P(0)$. For an equation of state called ``SLy'' from \autocite{SLy_2004} with a central pressure $P(0) = \SI{e-4}{}$, an example of the resulting curves for pressure and energy density are shown in \autoref{fig: SLy static solutions}.
+This method allows us to generate static solution curves for various equations of state $\epsilon (P)$ and central pressures $P(0)$. For an equation of state called ``SLy'' from \autocite{SLy_2004} with a central pressure $P(0) = \SI{e-4}{GeV^4}$, an example of the resulting curves for pressure and energy density are shown in \autoref{fig: SLy static solutions}.
 
 \begin{figure}[h!]
     \centering
     \begin{subfigure}{.5\textwidth}
-        \includegraphics[width=\textwidth]{images/tov/SLy_P,p00.0001.pdf}
+        \includegraphics[width=\textwidth]{images/tov/SLy_P,p0_0.0001.pdf}
     \end{subfigure}%
     \begin{subfigure}{.5\textwidth}
-        \includegraphics[width=\textwidth]{images/tov/SLy_rho,p00.0001.pdf}
+        \includegraphics[width=\textwidth]{images/tov/SLy_rho,p0_0.0001.pdf}
     \end{subfigure}
-    \caption{The pressure $P$ (left) and energy density $\epsilon$ (right) for $P(0) = \SI{e-4}{}$ with equation of state SLy from \autocite{SLy_2004}.}
+    \caption{The pressure $P$ (left) and energy density $\epsilon$ (right) for $P(0) = \SI{e-4}{GeV^4}$ with equation of state SLy from \autocite{SLy_2004}.}
     \label{fig: SLy static solutions}
 \end{figure}
 
@@ -72,7 +72,7 @@ By observation, in \autoref{fig: SLy static solutions}, we can see that the tota
 
 In \autoref{fig: SLy static solutions}, we looked at one static solution produced using a realistic equation of state called SLy. The decision to use SLy was simply exemplary in this case; we could have used a different equation of state and the static solutions therefore would have been different. To determine the predictions that an individual equation of state will make over a range of values, it is impractical to simply look at static solution curves, such as those in \autoref{fig: SLy static solutions}. Instead, we look at the macroscopic properties, $M$ and $R$, that each predicts over a wide range of central pressure values.
 
-To do this, we create a range of central pressure values, approximately $P(0)\in [\SI{e-6}{}, \SI{e-1}{}]$. In practice, it is useful to use a logarithmic range of values, such that the values are more densely packed near $P=\SI{e-6}{}$; within our code, we use the \code{numpy} function \code{logspace} to create an array of values with logarithmic spacing. Now, we can iterate through these pressure values and create static solutions for each central pressure. For every static solution, we integrate until we find $R$, at which time we also calculate $M$. These values are stored, along with the central pressure value from which they were produced.
+To do this, we create a range of central pressure values, approximately $P(0)\in [\SI{e-6}{}, \SI{e-1}{}]$, s. In practice, it is useful to use a logarithmic range of values, such that the values are more densely packed near $P=\SI{e-6}{}$; within our code, we use the \code{numpy} function \code{logspace} to create an array of values with logarithmic spacing. Now, we can iterate through these pressure values and create static solutions for each central pressure. For every static solution, we integrate until we find $R$, at which time we also calculate $M$. These values are stored, along with the central pressure value from which they were produced.
 
 Using these values, we plot two curves: $M$ vs. $P_0$ and $M$ vs. $R$. These are shown in \autoref{fig: tov, SLy mac curves}.
 
@@ -100,7 +100,7 @@ In \autocite{SLy_2004}, besides the SLy EOS, there is an additional EOS called F
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{images/tov/r_analysis,all.pdf}
     \end{subfigure}
-    \caption{The mass-central pressure (left) and mass-radius (right) diagrams for the five equations of state from \autocite{SLy_2004,BSk_2013}.}
+    \caption{The mass-central pressure (left) and mass-radius (right) diagrams for the five equations of state from \autocite{SLy_2004,BSk_2013}. Mass given in solar masses ($\odot$).}
     \label{fig: tov, all eos analyses}
 \end{figure}
 
