@@ -1,13 +1,13 @@
 # Joe Nyhan, 15 July 2021
 # File for computing static solutions for fermionic stars via the TOV model.
-#%%
+
 import numpy as np
 import pandas as pd
 from scipy.integrate import solve_ivp
 from scipy.interpolate import interp1d
 # from scipy.optimize import minimize, fmin
 import matplotlib.pyplot as plt
-# %%
+
 
 # EOS
 eos_UR        = 0
@@ -142,7 +142,7 @@ if make_static_solution:
 
     print(f"COMPLETED.")
         
-    
+
 
 # P0 ANALYSIS
 

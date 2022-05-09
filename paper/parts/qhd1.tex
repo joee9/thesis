@@ -1,31 +1,39 @@
-\chapter{QHD-I}
+\chapter{Quantum Hadrodynamics and the QHD-I Parameter Set}
+% \chapter{Quantum Hadrodynamics a}
 
-This chapter will describe the derivation of an equation of state from the QHD-I parameter set, as described within \autocite{diener_2008}.
+This chapter will describe the derivation of an equation of state from Quantum Hadrodynamics and the QHD-I parameter set, as described within \autocite{diener_2008}.
 
 \section{Introduction}
 
+Quantum Hadrodynamics (QHD) is a model of nuclear matter within a neutron star. Within this model, the forces and interactions between \textit{baryons} (e.g. protons and neutrons) are modelled by the exchange of particles known as \textit{mesons}. QHD, importantly, requires some form of experimental input in order for the model to be complete and make predictions; this experimental input is given in terms of \textit{coupling constants}, which quantify the strength of the interactions between the baryons and mesons. These coupling constants are unique to neutron stars, and therefore must be calculated by analyzing the matter within a neutron star. This is very difficult, however, because the intense densities and pressures present in neutron stars are not reproducible on earth. Therefore, physicists have interpolated data from other nuclear experiments and from observations of neutron stars to compute coupling constants; due to this ``interpolation'' process, many parameter sets, all slightly different, have been proposed. Finally, the equations of QHD can be difficult to solve, so simplifications can be made to make finding a solution more practical.
+
+In this chapter, the formalism behind calculating the equations to be solved from QHD will be analyzed. Specifically, we will look at the simplest QHD parameter set, called QHD-I. Then, we will make simplifications in the form of the \textit{relativistic mean field} approximations. Finally, we will numerically calculate the EOS from the equations we have derived along the way, and discuss its predictions by analyzing the results of solving the TOV equations.
+
 
 \section{Derivation of equations of motion}
+
+% We begin by identifying the fields necessary to our study of the simplified QHD-I parameter set
+% \begin{align*}
+%     \varphi_\alpha = \begin{cases}
+%         \phi(x):     & \text{scalar meson field,}\\
+%         V^\mu(x):    & \text{vector meson field,}\\
+%         \psi(x):     & \text{baryon field,}\\
+%         \bar\psi(x)  = \psi^\dagger(x)\gamma^0: & \text{Dirac adjoint baryon field.}\\
+%     \end{cases}
+% \end{align*}
+
+Within Quantum Hadrodynamics I (QHD-I), there are three important fields: $\phi(x)$, the \textit{scalar meson field}, $V_\mu(x)$, the \textit{vector meson field}, and $\psi(x)$, the \textit{baryon field}. We also define the \textit{Dirac adjoint baryon field}, given by $\bar\psi(x) = \psi^\dagger(x) \gamma^0$. Using these fields, we write the Lagrange density for the QHD-I parameter set
+\begin{align} \label{eqn: QH, LD,QHD1}
+    \Lag & = \bar{\psi} \bqty{\gamma_\mu(i\p^\mu -g_\nu V^\mu) - (M-g_s\phi)} \psi \nonumber\\
+    & \quad + \frac{1}{2} \pqty{\p_\mu \phi \p^\mu \phi - m_s^2 \phi^2} - \frac{1}{4} V_{\mu\nu}V^{\mu\nu} + \frac{1}{2} m_\omega^2 V_\mu V^\mu,
+\end{align}
+where $V_{\mu\nu}\Def\p_\mu V_\nu (x) - \p_\nu V_\mu(x)$, $g_\nu$ and $g_\omega$ are the coupling constants, and $M, m_s,$ and $m_\omega$ are the baryon, scalar meson, and vector meson masses, respectively. This Lagrange density is given in \autocite[p. 56]{diener_2008}.
 
 The Euler-Lagrange equations, for a Lagrange density $\Lag$ over a classical field $\varphi_\alpha$, are given by
 \begin{align}\label{eqn: ELE}
     \p_\nu\qty(\pdv{\Lag}{(\p_\nu \varphi_\alpha)}) - \pdv{\Lag}{\varphi_\alpha} = 0.
 \end{align}
-From \autocite[p. 56]{diener_2008}, we have the Lagrangian density of QHD-I
-\begin{align} \label{eqn: QH, LD,QHD1}
-    \Lag & = \bar{\psi} \bqty{\gamma_\mu(i\p^\mu -g_\nu V^\mu) - (M-g_s\phi)} \psi \nonumber\\
-    & \quad + \frac{1}{2} \pqty{\p_\mu \phi \p^\mu \phi - m_s^2 \phi^2} - \frac{1}{4} V_{\mu\nu}V^{\mu\nu} + \frac{1}{2} m_\omega^2 V_\mu V^\mu,
-\end{align}
-where $V_{\mu\nu}\Def\p_\mu V_\nu (x) - \p_\nu V_\mu(x)$. To determine the equations of motion for this system, we must apply \eqref{eqn: ELE} to \eqref{eqn: QH, LD,QHD1} for each unique field in the system
-\begin{align*}
-    \varphi_\alpha = \begin{cases}
-        \phi(x) &: \quad \text{scalar meson field,}\\
-        V^\mu(x) &: \quad \text{vector meson field,}\\
-        \psi(x) &: \quad \text{baryon field,}\\
-        \bar\psi(x) &: \quad \text{Dirac adjoint baryon field,}\\
-    \end{cases}
-\end{align*}
-where $\bar\psi(x) \Def \psi^\dagger(x)\gamma^0$, the \emph{Dirac adjoint.}
+By solving the Euler-Lagrange equations, we can determine the equations of motion, which tells us how the system behaves. To determine these equations of motion, we must apply \eqref{eqn: ELE} to \eqref{eqn: QH, LD,QHD1} for each field in the system: $\varphi_\alpha = \Bqty{\phi, V_\mu, \psi, \bar\psi}$.
 
 For the scalar meson field, when $\varphi_\alpha = \phi(x)$, the first term in \eqref{eqn: ELE} gives
 \begin{align*}
@@ -86,16 +94,16 @@ In summary, here are the four equations of motion for QHD-I:
     &\bqty{\gamma_\mu(i\p^\mu -g_v V^\mu) - (M-g_s\phi)} \psi = 0,\tag{\ref{eqn: eom,barpsi}}\\
     & i \p_\nu \bar\psi \gamma^\nu -\bar\psi\bqty{\gamma_\mu(i\p^\mu - g_v V^\mu) - (M-g_s\phi)} = 0. \tag{\ref{eqn: eom,psi}}
 \end{align*}
-The first three are given in \autocite{diener_2008}.
+The first three are given in \autocite{diener_2008}. These equations of motion will be used throughout the remainder of this derivation; they are the foundation for our understanding of how the system behaves.
 
 \section{Relativistic Mean Field Simplifications}
 
-In \autocite{diener_2008} \S 8.3, we find that the equations of motion listed above are very difficult to solve in their current form. To make them more manageable, we approximate them with ``relativistic mean field'' (RMF) simplifications, where we take each field to be its ground state expectation value. For the meson fields, this simplification yields
+In \autocite{diener_2008} \S 8.3, we find that the equations of motion listed above are very difficult to solve in their current form. To make them more manageable, we approximate them with \textit{relativistic mean field} (RMF) simplifications, where we take each field to be its ground state expectation value. For the meson fields, this simplification yields
 \begin{align}
     \phi &\goesto \bra{\Phi} \phi \ket{\Phi} = \expval{\phi} \Def \phi_0, \\
     V_\mu & \goesto \bra{\Phi} V_\mu \ket{\Phi} = \expval{V_\mu} \Def \delta_{\mu 0} V_0,
 \end{align}
-where $\ket{\Phi}$ represents the ground state. These results arise from arguing that, in their ground states, $\phi$ and $V_\mu$ should be independent of space and time, as the system is bot uniform and stationary; therefore, $\phi_0$ and $V_0$ are constants. Furthermore, because the system is at rest and the baryon flux, $\bar\psi\gamma^i\psi$, is zero, the spatial components of the expected value of $V_\mu$, $\expval{V_\mu}$, must vanish \autocite{diener_2008}.
+where $\ket{\Phi}$ represents the ground state. These results arise from arguing that, in their ground states, $\phi$ and $V_\mu$ should be independent of space and time, as the system is bot uniform and stationary; therefore, $\phi_0$ and $V_0$ are constants. Furthermore, because the system is at rest and the baryon flux, $\bar\psi\gamma^i\psi$, is zero, the spatial components of the expected value of $V_\mu$, $\expval{V_\mu}$, must vanish \autocite{diener_2008}. 
 
 For the baryon field, a ``normal order'', i.e. normalized, expectation value must be taken, as because otherwise, the vacuum would be taken into account and the traditional expectation value would diverge. This ``normal ordered'' expectation value is denoted with a ``:''. Thus, these are the expectation values for the baryon field
 \begin{align}
@@ -103,20 +111,19 @@ For the baryon field, a ``normal order'', i.e. normalized, expectation value mus
     \bar\psi\gamma^\mu \psi &\goesto \bra{\Phi}\!:\!\psi\gamma^\mu\psi\!:\!\ket{\Phi} = \expval{\psi\gamma^0\psi}.
 \end{align}
 
-Given these simplifications, we can rewrite the equations of motion given in equations \eqref{eqn: eom,sm}, \eqref{eqn: eom,vm}, \eqref{eqn: eom,barpsi}, and \eqref{eqn: eom,psi} as
-
+Intuitively, these simplifications mean that the system is approximated as its ``average.'' Before the simplifications, there are high-energy, strong interactions, as well as low-energy, weak interactions; now, we instead treat every interaction as \textit{the average} interaction. Given these simplifications, we can rewrite the equations of motion given in equations \eqref{eqn: eom,sm}, \eqref{eqn: eom,vm}, \eqref{eqn: eom,barpsi}, and \eqref{eqn: eom,psi} as
 \begin{align}
-    & m_s^2 \phi_0^2 = g_s\expval{\bar\phi\phi}\\
-    & m_\omega^2 V_0 = g_v\expval{\bar\phi\gamma^0\phi}\\
+    & m_s^2 \phi_0^2 = g_s\expval{\bar\phi\phi}\label{eqn: qhd1, expval phi0 eom}\\
+    & m_\omega^2 V_0 = g_v\expval{\bar\phi\gamma^0\phi}\label{eqn: qhd1, expval V0 eom}\\
     & \bqty{i\gamma_\mu\p^\mu - g_v\gamma_0 V_0 - (M - g_s\phi_0)}\psi = 0\\
     & i \p_\mu \bar\psi \gamma^\mu -\bar\psi\bqty{i\gamma_\mu\p^\mu - g_v \gamma_0V_0 - (M-g_s\phi)} = 0.
 \end{align}
 
-From \autocite[p. 40]{diener_2008} (6.14), where we consider the star to be a spherically symmetric fluid with velocity $\vb{v}=0$, we get the following forms for $\epsilon$ and $P$
+From \autocite[p. 40]{diener_2008} (6.14), where we consider the star to be a spherically symmetric, stationary fluid, we get the following forms for $\epsilon$ and $P$
 \begin{align}\label{eqn: eps and P defs}
     \epsilon = \expval{T^{00}}, \quad P = \frac{1}{3}\expval{T^{ii}},
 \end{align}
-where $T^{\mu\nu}$ is the energy-momentum tensor, given by \autocite[p. 40]{diener_2008} (6.13), is
+where $T^{\mu\nu}$ is the energy-momentum tensor, given by \autocite[p. 40]{diener_2008} (6.13), defined by 
 \begin{align}\label{eqn: emt}
     T^{\mu\nu} = \pdv{\Lag}{(\p_\mu \varphi_\alpha)}\p^\nu \varphi_\alpha - \Lag \eta^{\mu\nu}.
 \end{align}
@@ -125,80 +132,99 @@ Given the simplifications at the beginning of this section, we can form the Lagr
 \begin{align}
     \Lag_\text{RMF} = \bar\psi \bqty{i\gamma_\mu\p^\mu - g_v \gamma_0 V_0 - (M-g_s\phi_0)} \psi - \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2,
 \end{align}
-as given in Diener. Next, we form the energy momentum tensor using \eqref{eqn: emt}. We use $\varphi_\alpha \in \{ \phi_0, V_0, \psi\}$. There is no dependence of $\Lag_\text{RMF}$ on the derivatives of $\phi_0$ and $V_0$, so for those values of $\varphi_\alpha$, the first term in \eqref{eqn: emt} is zero. For $\psi$, however, there is a $\p^\mu$ within the first term in the brackets, so we must deal with a $\p_\mu \psi$ derivative. 
+as given in Diener. Importantly, many of the kinetic terms in $\Lag$ vanish, as the derivative of a constant (which both $V_0$ and $\phi_0$ are) is zero. 
+
+Next, we form the energy momentum tensor using \eqref{eqn: emt} with $\varphi_\alpha \in \{ \phi_0, V_0, \psi\}$. There is no dependence of $\Lag_\text{RMF}$ on the derivatives of $\phi_0$ and $V_0$, so for those values of $\varphi_\alpha$, the first term in \eqref{eqn: emt} is zero. For $\psi$, however, there is a $\p^\mu$ within the first term in the brackets, so we must deal with a $\p_\mu \psi$ derivative. 
 
 To start, we distribute the $\psi$ and $\bar\psi$ into the brackets, and notice that only the first term has any $\p_\mu \psi$ dependence, so
 \begin{align}
     \pdv{\Lag_\text{RMF}}{(\p_\mu \psi)} \p^\nu \varphi_\alpha & = \pdv{(\p_\mu \psi)}\bqty{\bar\psi i \gamma_\sigma \p^\sigma\psi}\p^\nu \psi + \cancelto{0}{\pdv{(\p_\mu \psi)}\bqty{\cdots}} \p^\nu \psi = i\bar\psi\gamma^\mu \p^\nu \psi.
 \end{align}
-The second term in \eqref{eqn: emt} is straightforward. However, we can simplify by substituting \ref{eqn: eom,barpsi} into the Lagrangian density when we form this term, such that
+The second term in \eqref{eqn: emt} is straightforward. However, we can simplify by substituting \eqref{eqn: eom,barpsi} into the Lagrangian density when we form this term, such that
 \begin{align}
     \Lag \eta^{\mu\nu} &= \eta^{\mu\nu}\pqty{\bar\psi \bqty{i\gamma_\mu\p^\mu - g_v \gamma_0 V_0 - (M-g_s\phi_0)} \psi - \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2}\nonumber\\
     & = \eta^{\mu\nu} \pqty{- \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2}.
 \end{align}
-Therefore, by \eqref{eqn: emt}, the \textsc{rmf} energy momentum tensor takes the form
+Therefore, by \eqref{eqn: emt}, the RMF energy momentum tensor takes the form
 \begin{align}
     T^{\mu\nu}_\text{RMF} & =i\bar\psi\gamma^\mu \p^\nu \psi - \eta^{\mu\nu} \pqty{- \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2}.
 \end{align}
 If we now use this result in \eqref{eqn: eps and P defs}, we obtain equations for $\epsilon$ and $P$
 \begin{align}
-    \epsilon & = \expval{T^{00}} = \expval{i\bar\psi\gamma^0 \p^0 \psi} + \frac{1}{2} m_s^2 \phi_0^2 - \frac{1}{2} m_\omega^2 V_0^2,\\
-    P &= \frac{1}{3}\expval{T^{ii}} = \expval{i\bar\psi\gamma^i \p^i \psi}  - \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2.
+    \epsilon & = \expval{T^{00}} = \expval{i\bar\psi\gamma^0 \p^0 \psi} + \frac{1}{2} m_s^2 \phi_0^2 - \frac{1}{2} m_\omega^2 V_0^2,\label{eqn: qhd1, eps expval}\\
+    P &= \frac{1}{3}\expval{T^{ii}} = \expval{i\bar\psi\gamma^i \p^i \psi}  - \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2. \label{eqn: qhd1, p expval}
 \end{align}
 Now that we have expressions for $\epsilon$ and $P$, we need to evaluate the expectation values in order to calculate numerical values for the equation of state.
 
+Within \autocite{diener_2008} \S 8.4, there is a lengthy derivation of the expectation values present in \eqref{eqn: qhd1, expval phi0 eom}, \eqref{eqn: qhd1, expval V0 eom}, \eqref{eqn: qhd1, eps expval}, and \eqref{eqn: qhd1, p expval}. These expectation values are non-trivial to derive, but are beyond the scope of this paper. Therefore, we will use the results given in \autocite{diener_2008} and use them in calculation.
 
-\medskip
-\JN{MORE HERE. EXPLAIN EVALUATION OF EXPECTATION VALUES.}
-% simplifications for baryon field
-% derivation of energy momentum tensor and lagrangian for RMF
-% derivation of energy density and pressure from EMT
-% calculation of expectation values
-\medskip
-
-After evaluating these expectation values, we have
+After evaluating the expectation values, we have
 \begin{align}
-    \phi_0 &= \frac{g_s}{m_s^2} \frac{\gamma}{2\pi^2}\int_0^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}}, \label{eqn: rmf,phi0} \\
+    \phi_0 &= \frac{g_s}{m_s^2} \frac{1}{\pi^2}\int_0^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}}, \label{eqn: rmf,phi0} \\
     V_0 &= \frac{g_v}{m_\omega^2} \rho, \label{eqn: rmf,V0}
 \end{align}
-where once again, $m^* \Def M - g_s \phi$, the \emph{reduced mass}, and $\rho$ is the nucleon number density. If we assume spherical symmetry, a reasonable condition for the study of star-like systems, we get thee following expressions
+where once again, $m^* \Def M - g_s \phi$, the \emph{reduced mass}, and $\rho$ is the nucleon number density. If we assume spherical symmetry and substitute in the results for the expectation values into \eqref{eqn: qhd1, eps expval} and \eqref{eqn: qhd1, p expval}, we get the following expressions
 \begin{align}
-    \epsilon & = \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2 + \frac{\gamma}{2\pi^2} \int_0^{k_f} \dd{k} k^2 \sqrt{k^2 + m^{*2}}, \label{eqn: rmf,eps}\\
-    P & = -\frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2 + \frac{1}{3} \pqty{\frac{\gamma}{2\pi^2} \int_0^{k_f} \dd{k}\frac{k^4}{\sqrt{k^2 + m^{*2}}}}. \label{eqn: rmf,p}
+    \epsilon & = \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2 + \frac{1}{\pi^2} \int_0^{k_f} \dd{k} k^2 \sqrt{k^2 + m^{*2}}, \label{eqn: rmf,eps}\\
+    P & = -\frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2 + \frac{1}{3} \pqty{\frac{1}{\pi^2} \int_0^{k_f} \dd{k}\frac{k^4}{\sqrt{k^2 + m^{*2}}}}. \label{eqn: rmf,p}
 \end{align}
-In the next section, we will use these expressions to generate values for this equation of state.
+In the next section, we will use evaluate these equations to calculate numerical values for the equation of state.
 
-\section{Numerical generation of the equation of state}
+% \section{Numerical generation of the equation of state}
 
-Throughout this section, we will extensively reference \autoref{ch: qhd1 code}. Any line numbers directly reference the code presented there.
+% Throughout this section, we will extensively reference \autoref{ch: qhd1 code}. Any line numbers directly reference the code presented there.
 
-% We now wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. To do so, we first wish to find analytical forms for the integrals present in each of those equations, respectively. The aforementioned integrals are the following
-% \begin{align}
-%     \int_{0}^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}}, \quad\int_{0}^{k_f} \dd{k} \frac{k^4}{\sqrt{k^2 + m^{*2}}},
-%     \quad\int_{0}^{k_f} \dd{k} k^2\sqrt{k^2 + m^{*2}}.
-% \end{align}
-% We integrate each of these using Mathematica, giving it the assumptions that $k_f > 0$ and that $\Re[m^*] > 0$. This gives these explicit, closed forms
-% \begin{align}
-%     \int_{0}^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}} &= \frac{1}{2} m^* \pqty{k_f \sqrt{k_f^2 + m^{*2}} - m^{*2}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}} \\
-%     \int_{0}^{k_f} \dd{k} \frac{k^4}{\sqrt{k^2 + m^{*2}}} &= \frac{1}{8} \pqty{k_f(2k_f^2 - 3m^{*2}) - 3m^{*4}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}}\\
-%     \quad\int_{0}^{k_f} \dd{k} k^2\sqrt{k^2 + m^{*2}} &= \frac{1}{8} \pqty{k_f \sqrt{k_f^2 + m^{*2}}\qty(2k_f^2 + m^{*2}) - m^{*4}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}}
-% \end{align}
+% % We now wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. To do so, we first wish to find analytical forms for the integrals present in each of those equations, respectively. The aforementioned integrals are the following
+% % \begin{align}
+% %     \int_{0}^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}}, \quad\int_{0}^{k_f} \dd{k} \frac{k^4}{\sqrt{k^2 + m^{*2}}},
+% %     \quad\int_{0}^{k_f} \dd{k} k^2\sqrt{k^2 + m^{*2}}.
+% % \end{align}
+% % We integrate each of these using Mathematica, giving it the assumptions that $k_f > 0$ and that $\Re[m^*] > 0$. This gives these explicit, closed forms
+% % \begin{align}
+% %     \int_{0}^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}} &= \frac{1}{2} m^* \pqty{k_f \sqrt{k_f^2 + m^{*2}} - m^{*2}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}} \\
+% %     \int_{0}^{k_f} \dd{k} \frac{k^4}{\sqrt{k^2 + m^{*2}}} &= \frac{1}{8} \pqty{k_f(2k_f^2 - 3m^{*2}) - 3m^{*4}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}}\\
+% %     \quad\int_{0}^{k_f} \dd{k} k^2\sqrt{k^2 + m^{*2}} &= \frac{1}{8} \pqty{k_f \sqrt{k_f^2 + m^{*2}}\qty(2k_f^2 + m^{*2}) - m^{*4}\ln\bqty{\frac{k_f + \sqrt{k_f+m^{*2}}}{k_f}}}
+% % \end{align}
 
-We now wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. Simply, this process requires looping through various values of $k_f$; at each iteration, we find the corresponding value of $\phi_0$ by using a root finding routine on \eqref{eqn: rmf,phi0}, as $m^*$ depends on $\phi_0$, then computing $V_0$ independently using \eqref{eqn: rmf,V0}, and then finally substituting those values into \eqref{eqn: rmf,eps} and \eqref{eqn: rmf,p} and storing those values. After creating a table of values for $\epsilon$ and $P$, we can verify the validity of the equation of state by solving the TOV equations and comparing the results of static solutions, mass-radius curves, and mass-pressure curves to other, previously calculated equations of state. An in-depth description of the TOV equations and their implementation is given in \autoref{ch: static solutions}.
+% We now wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. Simply, this process requires looping through various values of $k_f$; at each iteration, we find the corresponding value of $\phi_0$ by using a root finding routine on \eqref{eqn: rmf,phi0}, as $m^*$ depends on $\phi_0$, then computing $V_0$ independently using \eqref{eqn: rmf,V0}, and then finally substituting those values into \eqref{eqn: rmf,eps} and \eqref{eqn: rmf,p} and storing those values. After creating a table of values for $\epsilon$ and $P$, we can verify the validity of the equation of state by solving the TOV equations and comparing the results of static solutions, mass-radius curves, and mass-pressure curves to other, previously calculated equations of state. An in-depth description of the TOV equations and their implementation is given in \autoref{ch: static solutions}.
 
-To begin, we choose a value of $k_f$ for the entirety of the iteration; for sake of example, we take $k_f = 1$. Then, we find the value of $\phi_0$ for that $k_f$ value. We define a function in Python for $\phi_0$ from \eqref{eqn: rmf,phi0}. This is given between lines 20 and 28.
+% To begin, we choose a value of $k_f$ for the entirety of the iteration; for sake of example, we take $k_f = 1$. Then, we find the value of $\phi_0$ for that $k_f$ value. We define a function in Python for $\phi_0$ from \eqref{eqn: rmf,phi0}. This is given between lines 20 and 28.
 
-While most of the function is straight forward, lines 23-26 may be cryptic without context. These lines are responsible for numerically computing the integral at the end of \eqref{eqn: rmf,phi0}, given the current $k_f$ value. \code{f(x)} is simply a function definition for the integrand of that integral, while line 26 uses the SciPy function \code{quad} to numerically integrate \code{f} from $0$ to $k_f$. \code{quad} returns a tuple containing both the numerical value of the integration and the bounds on that value's error, so we unpack it to get the value we want and call it \code{integral}. 
+% While most of the function is straight forward, lines 23-26 may be cryptic without context. These lines are responsible for numerically computing the integral at the end of \eqref{eqn: rmf,phi0}, given the current $k_f$ value. \code{f(x)} is simply a function definition for the integrand of that integral, while line 26 uses the SciPy function \code{quad} to numerically integrate \code{f} from $0$ to $k_f$. \code{quad} returns a tuple containing both the numerical value of the integration and the bounds on that value's error, so we unpack it to get the value we want and call it \code{integral}. 
 
-To determine the value of $\phi_0$, we must use a root finding routine because in \eqref{eqn: rmf,phi0}, $\phi_0$ appears on both sides of the equation. Thus, we subtract all terms to one side of the equality such that is set equal to zero. This function will later be passed to SciPy function called \code{root} that will find when this function equals zero, meaning we have the desired value of $\phi_0$.
+% To determine the value of $\phi_0$, we must use a root finding routine because in \eqref{eqn: rmf,phi0}, $\phi_0$ appears on both sides of the equation. Thus, we subtract all terms to one side of the equality such that is set equal to zero. This function will later be passed to SciPy function called \code{root} that will find when this function equals zero, meaning we have the desired value of $\phi_0$.
 
-For the remaining parameters, $V_0$, $P$, and $\epsilon$, we simply define functions to determine their values. In the equations for $P$ and $\epsilon$, we again use numerical integration using $\quad$ to determine the value of each integral, just as with the $\phi_0$ equation.
+% For the remaining parameters, $V_0$, $P$, and $\epsilon$, we simply define functions to determine their values. In the equations for $P$ and $\epsilon$, we again use numerical integration using $\quad$ to determine the value of each integral, just as with the $\phi_0$ equation.
 
-Now we are ready to calculate values for $P$ and $\epsilon$. We create an array of $k_f$ values, and loop through each. During every iteration, we calculate the root of the $\phi_0$ function, which gives us $\phi_0$, and we use that value, as well as the value of $V_0$ to determine the values of $P$ and $\epsilon$.  These values are saved and written to file. Notably, our root finding needs an initial guess, so we use the previously determined value of $\phi_0$ as the guess for the current iteration, as we know it will be relatively close.
+% Now we are ready to calculate values for $P$ and $\epsilon$. We create an array of $k_f$ values, and loop through each. During every iteration, we calculate the root of the $\phi_0$ function, which gives us $\phi_0$, and we use that value, as well as the value of $V_0$ to determine the values of $P$ and $\epsilon$.  These values are saved and written to file. Notably, our root finding needs an initial guess, so we use the previously determined value of $\phi_0$ as the guess for the current iteration, as we know it will be relatively close.
 
-After tabulating values for this QHD-1 equation of state, we can create mass-radius and mass-pressure curves, as derived in \autoref{ch: static solutions}. This produces the results given in \autoref{fig: qhd1 mass radius pressure}.
+% After tabulating values for this QHD-1 equation of state, we can create mass-radius and mass-pressure curves, as derived in \autoref{ch: static solutions}. This produces the results given in \autoref{fig: qhd1 mass radius pressure}.
 
-\begin{figure}[h!]
+
+\section{Numerical Generation of the Equation of State}
+
+During this section, important code blocks will be included for ease of reading. The entire code file is provided at the end of this paper in \autoref{ch: advanced code}.
+
+We wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. Simply, this process requires looping through various values of $k_f$; at each iteration, we find the corresponding value of $\phi_0$ by using a root finding routine on \eqref{eqn: rmf,phi0}, as $m^*$ depends on $\phi_0$, then computing $V_0$ independently using \eqref{eqn: rmf,V0}, and then finally substituting those values into \eqref{eqn: rmf,eps} and \eqref{eqn: rmf,p} and storing those values. After creating a table of values for $\epsilon$ and $P$, we can verify the validity of the equation of state by solving the TOV equations and comparing the results of static solutions, mass-radius curves, and mass-pressure curves to other, previously calculated equations of state. An in-depth description of the TOV equations and their implementation is given in \autoref{ch: static solutions}.
+
+To begin, we choose a value of $k_f$ for the entirety of the iteration; for sake of example, we take $k_f = 1$. Then, we find the value of $\phi_0$ for that $k_f$ value. We define a function in Python for $\phi_0$ from \eqref{eqn: rmf,phi0}. This is given between below.
+
+\begin{lstlisting}
+def f_phi0(phi0, kf):
+    mstar = M - g_s * phi0
+
+    def f(k):
+        return k**2 * mstar/sqrt(k**2 + mstar**2)
+    integral, err = quad(f,0,kf)
+
+    return phi0 - (g_s/m_s**2) * (gamma/(2*pi**2)) * integral
+\end{lstlisting}
+
+While most of the function is straight forward, the middle block may be cryptic without context. These lines are responsible for numerically computing the integral at the end of \eqref{eqn: rmf,phi0}, given the current $k_f$ value. \code{f(x)} is simply a function definition for the integrand of that integral, while the final line uses the SciPy function \code{quad} to numerically integrate \code{f} from $0$ to $k_f$. \code{quad} returns a tuple containing both the numerical value of the integration and the bounds on that value's error, so we unpack it to get the value we want and call it \code{integral}. 
+
+To determine the value of $\phi_0$, we must use a root finding routine because in \eqref{eqn: rmf,phi0}, $\phi_0$ appears on both sides of the equation. Thus, we subtract all terms to one side of the equality such that is set equal to zero; this is the return value of the \code{f\_phi0} function above. This function will later be passed to SciPy function called \code{root} that will find when this function equals zero, meaning we have the desired value of $\phi_0$.
+
+\begin{figure}[t]
     \centering
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\textwidth]{images/qhd1/p0_analysis.pdf}
@@ -210,7 +236,33 @@ After tabulating values for this QHD-1 equation of state, we can create mass-rad
     \label{fig: qhd1 mass radius pressure}
 \end{figure}
 
-From these plots and this analysis, we calculate the critical (maximum) mass that this EOS predicts to be \SI{6.1}{\odot} with a critical radius of \SI{42.1}{km}.
+For the remaining parameters, $V_0$, $P$, and $\epsilon$, we simply define functions to determine their values. In the equations for $P$ and $\epsilon$, we again use numerical integration using \code{quad} to determine the value of each integral, just as with the $\phi_0$ equation.
 
-\section{Analysis}
+\begin{lstlisting}
+kfs = logspace(-6,0,12000,base=10)
 
+energy_densities = []
+pressures = []
+
+phi0_guess = 10**(-1)
+
+for kf in kfs:
+
+    res = root(f_phi0, phi0_guess, args=kf)
+    phi0 = res.x[0]
+
+    V0 = f_V0(kf)
+    eps = f_eps(phi0, V0, kf)
+    p = f_P(phi0, V0, kf)
+
+    energy_densities.append(eps)
+    pressures.append(p)
+
+    phi0_guess = phi0
+\end{lstlisting}
+
+By the above code block, we now calculate numerical values for $P$ and $\epsilon$. We create an array of $k_f$ values, and loop through each. During every iteration, we calculate the root of the $\phi_0$ function, which gives us $\phi_0$, and we use that value, as well as the value of $V_0$ to determine the values of $P$ and $\epsilon$.  These values are saved and written to file. Notably, our root finding needs an initial guess, so we use the previously determined value of $\phi_0$ as the guess for the current iteration, as we know it will be relatively close.
+
+After tabulating values for this QHD-1 equation of state, we can create mass-radius and mass-pressure curves, as derived in \autoref{ch: static solutions}. This produces the results given in \autoref{fig: qhd1 mass radius pressure}. From these plots and this analysis, we calculate the critical (maximum) mass that this EOS predicts to be \SI{6.1}{\odot} with a critical radius of \SI{42.1}{km}. 
+
+Importantly, theses critical mass and critical radius values are noticeably larger than those given for the SLy family of EOSs. This is because the QHD-I EOS is not considered a ``realistic'' EOS, due to the extensive simplifications that it makes. Furthermore, the solution that we calculated here had the RMF simplifications, on top of the QHD-I simplifications, so this EOS should not be expected to give values that realistically predict neutron stars. This EOS instead was used as a teaching aid for how to effectively apply a theoretical model to numerically calculate an EOS and use that EOS to make predictions about the observable properties of the neutron stars it describes.

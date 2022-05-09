@@ -35,7 +35,7 @@
 \usepackage{subcaption}
     \DeclareCaptionFont{helvetica}{\fontfamily{phv}}
     \captionsetup[figure]{labelfont={bf}, font=helvetica, name={Figure}, labelsep=period, width = .8\textwidth}
-    \captionsetup[table]{labelfont={bf}, font=helvetica, name={Table}, labelsep=period, width = .8\textwidth}
+    % \captionsetup[table]{labelfont={bf}, font=helvetica, name={Table}, labelsep=period, width = .8\textwidth}
     
     
 %% ---------- ToC ---------- %%
@@ -79,7 +79,7 @@
 \definecolor{codegrey1}{rgb}{0.95,0.95,0.95}
 \definecolor{codegrey2}{rgb}{0.1,0.1,0.1}
 
-\lstdefinestyle{py}{
+\lstdefinestyle{pylines}{
 	language=Python,
 	basicstyle=\fontfamily{pcr}\selectfont\small,
 	keywordstyle=\bfseries,
@@ -89,6 +89,17 @@
     numbers=left,
     numberstyle=\color{codegrey2}\fontfamily{pcr}\selectfont,
     xleftmargin=18pt
+}
+\lstdefinestyle{py}{
+	language=Python,
+	basicstyle=\fontfamily{pcr}\selectfont\small,
+	keywordstyle=\bfseries,
+	commentstyle=\itshape,
+    backgroundcolor=\color{codegrey1},
+    breaklines=true,
+    % numbers=left,
+    % numberstyle=\color{codegrey2}\fontfamily{pcr}\selectfont,
+    % xleftmargin=18pt
 }
 \lstset{style=py}
 
@@ -129,6 +140,8 @@
     \appendix
     \titleformat{\chapter}[display]{\huge\fontfamily{phv}\selectfont}{\bfseries Appendix \thechapter}{0pt}{\thispagestyle{justpage}}
 
+
+    \lstset{style=pylines}
     \input{parts/code.tex}
 
     \newpage
