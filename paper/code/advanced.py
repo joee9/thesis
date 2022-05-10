@@ -1,9 +1,6 @@
 # Joe Nyhan, 22 February 2022
 # Calculates a table of values for EoS from the advanced QHD parameter sets
 
-#%%
-
-# from numpy import np.pi, np.sqrt
 import numpy as np
 from scipy.integrate import quad
 from scipy.optimize import least_squares
@@ -59,8 +56,6 @@ elif FSU_GOLD:
 
 @njit
 def k_from_rho(rho):
-    # if rho == 0: return 0
-    # return np.pi**2 * (3*np.pi**2 * rho)**(-2/3)
     return (3*np.pi**2*rho)**(1/3)
 
 @njit

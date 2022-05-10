@@ -1,10 +1,24 @@
 \chapter{Introduction}
 
-This chapter aims to introduce the motivation for this project, the structure of this report, and the basic tools and techniques used throughout.
-
 \section{Abstract}
 \input{parts/abstract.tex}
 
 \section{Neutron Stars}
 
+A neutron star is an incredibly dense stellar object, the core left over after a supergiant star undergoes a supernovae explosion. While one may think that a ``neutron star'' will contain only neutrons, it also contains protons and electrons; the star instead gets its name from the fact that it is overall neutral (meaning it has an equal number of protons and neutrons). Neutron stars have radii of approximately \SI{10}{km}, with masses of about \SI{1}{\odot}, a solar mass. This explains their incredible density; there is about the same (or more) mass crammed into a neutron star than would barely fit inside Washington, DC. Neutron stars are interesting for research because of their extreme conditions: incredibly strong gravity, high energy densities, and large pressures. Because of these conditions, neutron stars must be described by physics's most advanced and technical theories; by studying these situations, we can better understand how our theories work in these situations, and where they might not be so effective.
+
 \section{Equations of State}
+
+Within our model of a neutron star, there is a fundamental relationship between the \textit{energy density}, denoted $\epsilon$, and the \textit{pressure}, denoted $P$, known as the \textit{equation of state} (EOS). This relationship can be written in a functional form
+\[\epsilon = \epsilon(P) \quad\Longleftrightarrow\quad P = P(\epsilon). \]
+Most importantly, this relationship shows that an EOS allows us to know $P$ if we know $\epsilon$, and visa versa. 
+
+Within our macroscopic models of neutron stars, the EOS is a way to encode the fundamental interparticle interactions within the star. An EOS is therefore calculated by describing those quantum mechanical, subatomic interactions and then determining what that model predicts for $P$ and $\epsilon$. However, the true model of what occurs within a neutron star is unknown, as the conditions on and within a neutron star are not reproducible on earth for studies; therefore, the true EOS of a neutron star is unknown.
+
+\section{Report Outline}
+
+This report will explore the derivation, calculation, and predictions of the EOSs resulting from the Quantum Hadrodynamics (QHD) model. In \autoref{ch: static solutions}, the predictions made by neutron stars will be analyzed through the lens of the Tolman-Oppenheimer-Volkoff (TOV) equations. In \autoref{ch: qhd1}, Quantum Hadrodynamics and the simple, unrealistic EOS QHD-I will be carefully derived, analyzed, and numerically calculated. In \autoref{ch: advanced}, a more advanced EOS model will be analyzed, and its calculation described in detail. Finally, in the appendices, full code files discussed throughout are included.
+
+\section{Thanks}
+
+I want to extend my thanks, first, to Prof. Ben Kain, for all of his help and guidance on this project and in general this year; I have really enjoyed working with him. Second, I want to thank Prof. Oxley for serving as my reader on this thesis. Third, I would like to thank the Holy Cross College Honors program and Holy Cross Department of Physics for the opportunity to write this thesis. Finally, I want to thank my family for all of their help and support over the years; I couldn't have done it without them.

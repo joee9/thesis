@@ -13,9 +13,11 @@ np.set_printoptions(threshold=sys.maxsize)
 
 # ========== PARAMETER SET
 
-NL3      = 1
-FSU_GOLD = 0
+NL3      = 0
+FSU_GOLD = 1
 
+if NL3:        eos = 'NL3'
+elif FSU_GOLD: eos = 'FSUGold'
 # ========== PARMETERS
 
 # masses (GeV)

@@ -1,4 +1,4 @@
-\chapter{Quantum Hadrodynamics and the QHD-I Parameter Set}
+\chapter{Quantum Hadrodynamics and the QHD-I Parameter Set}\label{ch: qhd1}
 % \chapter{Quantum Hadrodynamics a}
 
 This chapter will describe the derivation of an equation of state from Quantum Hadrodynamics and the QHD-I parameter set, as described within \autocite{diener_2008}.
@@ -10,7 +10,7 @@ Quantum Hadrodynamics (QHD) is a model of nuclear matter within a neutron star. 
 In this chapter, the formalism behind calculating the equations to be solved from QHD will be analyzed. Specifically, we will look at the simplest QHD parameter set, called QHD-I. Then, we will make simplifications in the form of the \textit{relativistic mean field} approximations. Finally, we will numerically calculate the EOS from the equations we have derived along the way, and discuss its predictions by analyzing the results of solving the TOV equations.
 
 
-\section{Derivation of equations of motion}
+\section{Derivation of equations of motion}\label{sec: qhd1, eom derivation}
 
 % We begin by identifying the fields necessary to our study of the simplified QHD-I parameter set
 % \begin{align*}
@@ -96,7 +96,7 @@ In summary, here are the four equations of motion for QHD-I:
 \end{align*}
 The first three are given in \autocite{diener_2008}. These equations of motion will be used throughout the remainder of this derivation; they are the foundation for our understanding of how the system behaves.
 
-\section{Relativistic Mean Field Simplifications}
+\section{Relativistic Mean Field Simplifications}\label{sec: qhd1, rmf}
 
 In \autocite{diener_2008} \S 8.3, we find that the equations of motion listed above are very difficult to solve in their current form. To make them more manageable, we approximate them with \textit{relativistic mean field} (RMF) simplifications, where we take each field to be its ground state expectation value. For the meson fields, this simplification yields
 \begin{align}
@@ -107,7 +107,7 @@ where $\ket{\Phi}$ represents the ground state. These results arise from arguing
 
 For the baryon field, a ``normal order'', i.e. normalized, expectation value must be taken, as because otherwise, the vacuum would be taken into account and the traditional expectation value would diverge. This ``normal ordered'' expectation value is denoted with a ``:''. Thus, these are the expectation values for the baryon field
 \begin{align}
-    \bar\psi\psi &\goesto \bra{\Phi}\!:\!\psi\psi\!:\!\ket{\Phi} = \expval{\bar\psi\psi}.\\
+    \bar\psi\psi &\goesto \bra{\Phi}\!:\!\psi\psi\!:\!\ket{\Phi} = \expval{\bar\psi\psi},\\
     \bar\psi\gamma^\mu \psi &\goesto \bra{\Phi}\!:\!\psi\gamma^\mu\psi\!:\!\ket{\Phi} = \expval{\psi\gamma^0\psi}.
 \end{align}
 
@@ -205,7 +205,7 @@ In the next section, we will use evaluate these equations to calculate numerical
 
 During this section, important code blocks will be included for ease of reading. The entire code file is provided at the end of this paper in \autoref{ch: advanced code}.
 
-We wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. Simply, this process requires looping through various values of $k_f$; at each iteration, we find the corresponding value of $\phi_0$ by using a root finding routine on \eqref{eqn: rmf,phi0}, as $m^*$ depends on $\phi_0$, then computing $V_0$ independently using \eqref{eqn: rmf,V0}, and then finally substituting those values into \eqref{eqn: rmf,eps} and \eqref{eqn: rmf,p} and storing those values. After creating a table of values for $\epsilon$ and $P$, we can verify the validity of the equation of state by solving the TOV equations and comparing the results of static solutions, mass-radius curves, and mass-pressure curves to other, previously calculated equations of state. An in-depth description of the TOV equations and their implementation is given in \autoref{ch: static solutions}.
+We wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. Simply, this process requires looping through various values of $k_f$; at each iteration, we find the corresponding value of $\phi_0$ by using a root finding routine on \eqref{eqn: rmf,phi0}, as $m^*$ depends on $\phi_0$, then computing $V_0$ independently using \eqref{eqn: rmf,V0}, and then finally substituting those values into \eqref{eqn: rmf,eps} and \eqref{eqn: rmf,p} and storing those values. After creating a table of values for $\epsilon$ and $P$, we can verify the validity of the EOS by solving the TOV equations and comparing the results of static solutions, mass-radius curves, and mass-pressure curves to other, previously calculated equations of state. An in-depth description of the TOV equations and their implementation is given in \autoref{ch: static solutions}.
 
 To begin, we choose a value of $k_f$ for the entirety of the iteration; for sake of example, we take $k_f = 1$. Then, we find the value of $\phi_0$ for that $k_f$ value. We define a function in Python for $\phi_0$ from \eqref{eqn: rmf,phi0}. This is given between below.
 
@@ -220,7 +220,7 @@ def f_phi0(phi0, kf):
     return phi0 - (g_s/m_s**2) * (gamma/(2*pi**2)) * integral
 \end{lstlisting}
 
-While most of the function is straight forward, the middle block may be cryptic without context. These lines are responsible for numerically computing the integral at the end of \eqref{eqn: rmf,phi0}, given the current $k_f$ value. \code{f(x)} is simply a function definition for the integrand of that integral, while the final line uses the SciPy function \code{quad} to numerically integrate \code{f} from $0$ to $k_f$. \code{quad} returns a tuple containing both the numerical value of the integration and the bounds on that value's error, so we unpack it to get the value we want and call it \code{integral}. 
+While most of the function is straight forward, the middle block may be cryptic without context. These lines are responsible for numerically computing the integral at the end of \eqref{eqn: rmf,phi0}, given the current $k_f$ value. \code{f(k)} is simply a function definition for the integrand of that integral, while the final line uses the SciPy function \code{quad} to numerically integrate \code{f} from $0$ to $k_f$. \code{quad} returns a tuple containing both the numerical value of the integration and the bounds on that value's error, so we unpack it to get the value we want and call it \code{integral}. 
 
 To determine the value of $\phi_0$, we must use a root finding routine because in \eqref{eqn: rmf,phi0}, $\phi_0$ appears on both sides of the equation. Thus, we subtract all terms to one side of the equality such that is set equal to zero; this is the return value of the \code{f\_phi0} function above. This function will later be passed to SciPy function called \code{root} that will find when this function equals zero, meaning we have the desired value of $\phi_0$.
 
