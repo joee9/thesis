@@ -7,7 +7,7 @@ This chapter will describe the derivation of an equation of state from Quantum H
 
 Quantum Hadrodynamics (QHD) is a model of nuclear matter within a neutron star. Within this model, the forces and interactions between \textit{baryons} (e.g. protons and neutrons) are modelled by the exchange of particles known as \textit{mesons}. QHD, importantly, requires some form of experimental input in order for the model to be complete and make predictions; this experimental input is given in terms of \textit{coupling constants}, which quantify the strength of the interactions between the baryons and mesons. These coupling constants are unique to neutron stars, and therefore must be calculated by analyzing the matter within a neutron star. This is very difficult, however, because the intense densities and pressures present in neutron stars are not reproducible on earth. Therefore, physicists have interpolated data from other nuclear experiments and from observations of neutron stars to compute coupling constants; due to this ``interpolation'' process, many parameter sets, all slightly different, have been proposed. Finally, the equations of QHD can be difficult to solve, so simplifications can be made to make finding a solution more practical.
 
-In this chapter, the formalism behind calculating the equations to be solved from QHD will be analyzed. Specifically, we will look at the simplest QHD parameter set, called QHD-I. Then, we will make simplifications in the form of the \textit{relativistic mean field} approximations. Finally, we will numerically calculate the EOS from the equations we have derived along the way, and discuss its predictions by analyzing the results of solving the TOV equations.
+In this chapter, the formalism behind calculating the equations to be solved from QHD will be analyzed. Specifically, we will look at the simplest QHD parameter set, called QHD-I. Then, we will make simplifications in the form of the \textit{relativistic mean field} approximations. Finally, we will numerically calculate the EOS from the equations we have derived along the way, and discuss its predictions by analyzing the results produced by the TOV equations.
 
 
 \section{Derivation of equations of motion}\label{sec: qhd1, eom derivation}
@@ -105,7 +105,7 @@ In \autocite{diener_2008} \S 8.3, we find that the equations of motion listed ab
 \end{align}
 where $\ket{\Phi}$ represents the ground state. These results arise from arguing that, in their ground states, $\phi$ and $V_\mu$ should be independent of space and time, as the system is bot uniform and stationary; therefore, $\phi_0$ and $V_0$ are constants. Furthermore, because the system is at rest and the baryon flux, $\bar\psi\gamma^i\psi$, is zero, the spatial components of the expected value of $V_\mu$, $\expval{V_\mu}$, must vanish \autocite{diener_2008}. 
 
-For the baryon field, a ``normal order'', i.e. normalized, expectation value must be taken, as because otherwise, the vacuum would be taken into account and the traditional expectation value would diverge. This ``normal ordered'' expectation value is denoted with a ``:''. Thus, these are the expectation values for the baryon field
+For the baryon field, a ``normal order'' (i.e. normalized) expectation value must be taken, as because otherwise, the vacuum would be taken into account and the traditional expectation value would diverge. This ``normal ordered'' expectation value is denoted with a ``:''. Thus, these are the expectation values for the baryon field
 \begin{align}
     \bar\psi\psi &\goesto \bra{\Phi}\!:\!\psi\psi\!:\!\ket{\Phi} = \expval{\bar\psi\psi},\\
     \bar\psi\gamma^\mu \psi &\goesto \bra{\Phi}\!:\!\psi\gamma^\mu\psi\!:\!\ket{\Phi} = \expval{\psi\gamma^0\psi}.
@@ -123,7 +123,7 @@ From \autocite[p. 40]{diener_2008} (6.14), where we consider the star to be a sp
 \begin{align}\label{eqn: eps and P defs}
     \epsilon = \expval{T^{00}}, \quad P = \frac{1}{3}\expval{T^{ii}},
 \end{align}
-where $T^{\mu\nu}$ is the energy-momentum tensor, given by \autocite[p. 40]{diener_2008} (6.13), defined by 
+where $T^{\mu\nu}$ is the energy-momentum tensor, given in \autocite[p. 40]{diener_2008} (6.13), defined by 
 \begin{align}\label{eqn: emt}
     T^{\mu\nu} = \pdv{\Lag}{(\p_\mu \varphi_\alpha)}\p^\nu \varphi_\alpha - \Lag \eta^{\mu\nu}.
 \end{align}
@@ -132,7 +132,7 @@ Given the simplifications at the beginning of this section, we can form the Lagr
 \begin{align}
     \Lag_\text{RMF} = \bar\psi \bqty{i\gamma_\mu\p^\mu - g_v \gamma_0 V_0 - (M-g_s\phi_0)} \psi - \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2,
 \end{align}
-as given in Diener. Importantly, many of the kinetic terms in $\Lag$ vanish, as the derivative of a constant (which both $V_0$ and $\phi_0$ are) is zero. 
+as given in \autocite{diener_2008}. Importantly, many of the kinetic terms in $\Lag$ vanish, as the derivative of a constant (which both $V_0$ and $\phi_0$ are) is zero. 
 
 Next, we form the energy momentum tensor using \eqref{eqn: emt} with $\varphi_\alpha \in \{ \phi_0, V_0, \psi\}$. There is no dependence of $\Lag_\text{RMF}$ on the derivatives of $\phi_0$ and $V_0$, so for those values of $\varphi_\alpha$, the first term in \eqref{eqn: emt} is zero. For $\psi$, however, there is a $\p^\mu$ within the first term in the brackets, so we must deal with a $\p_\mu \psi$ derivative. 
 
@@ -156,19 +156,19 @@ If we now use this result in \eqref{eqn: eps and P defs}, we obtain equations fo
 \end{align}
 Now that we have expressions for $\epsilon$ and $P$, we need to evaluate the expectation values in order to calculate numerical values for the equation of state.
 
-Within \autocite{diener_2008} \S 8.4, there is a lengthy derivation of the expectation values present in \eqref{eqn: qhd1, expval phi0 eom}, \eqref{eqn: qhd1, expval V0 eom}, \eqref{eqn: qhd1, eps expval}, and \eqref{eqn: qhd1, p expval}. These expectation values are non-trivial to derive, but are beyond the scope of this paper. Therefore, we will use the results given in \autocite{diener_2008} and use them in calculation.
+Within \autocite{diener_2008} \S 8.4, there is a lengthy derivation of the expectation values present in \eqref{eqn: qhd1, expval phi0 eom}, \eqref{eqn: qhd1, expval V0 eom}, \eqref{eqn: qhd1, eps expval}, and \eqref{eqn: qhd1, p expval}. These expectation values are non-trivial to derive, but are beyond the scope of this paper. Therefore, we will take the results given in \autocite{diener_2008} and use them in calculation.
 
 After evaluating the expectation values, we have
 \begin{align}
     \phi_0 &= \frac{g_s}{m_s^2} \frac{1}{\pi^2}\int_0^{k_f} \dd{k} \frac{k^2 m^*}{\sqrt{k^2 + m^{*2}}}, \label{eqn: rmf,phi0} \\
-    V_0 &= \frac{g_v}{m_\omega^2} \rho, \label{eqn: rmf,V0}
+    V_0 &= \frac{g_v}{m_\omega^2} \frac{k_f^3}{3\pi^2}, \label{eqn: rmf,V0}
 \end{align}
-where once again, $m^* \Def M - g_s \phi$, the \emph{reduced mass}, and $\rho$ is the nucleon number density. If we assume spherical symmetry and substitute in the results for the expectation values into \eqref{eqn: qhd1, eps expval} and \eqref{eqn: qhd1, p expval}, we get the following expressions
+where once again, $m^* \Def M - g_s \phi$ is the \emph{reduced mass}. If we assume spherical symmetry and substitute in the results for the expectation values into \eqref{eqn: qhd1, eps expval} and \eqref{eqn: qhd1, p expval}, we get the following expressions
 \begin{align}
     \epsilon & = \frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2 + \frac{1}{\pi^2} \int_0^{k_f} \dd{k} k^2 \sqrt{k^2 + m^{*2}}, \label{eqn: rmf,eps}\\
     P & = -\frac{1}{2} m_s^2 \phi_0^2 + \frac{1}{2} m_\omega^2 V_0^2 + \frac{1}{3} \pqty{\frac{1}{\pi^2} \int_0^{k_f} \dd{k}\frac{k^4}{\sqrt{k^2 + m^{*2}}}}. \label{eqn: rmf,p}
 \end{align}
-In the next section, we will use evaluate these equations to calculate numerical values for the equation of state.
+In the next section, we will evaluate these equations to calculate numerical values for the equation of state.
 
 % \section{Numerical generation of the equation of state}
 
@@ -207,7 +207,7 @@ During this section, important code blocks will be included for ease of reading.
 
 We wish to generate tabulated values of the equation of state using the equations for $\epsilon, P$ and $\phi_0$ at the end of the previous section. Simply, this process requires looping through various values of $k_f$; at each iteration, we find the corresponding value of $\phi_0$ by using a root finding routine on \eqref{eqn: rmf,phi0}, as $m^*$ depends on $\phi_0$, then computing $V_0$ independently using \eqref{eqn: rmf,V0}, and then finally substituting those values into \eqref{eqn: rmf,eps} and \eqref{eqn: rmf,p} and storing those values. After creating a table of values for $\epsilon$ and $P$, we can verify the validity of the EOS by solving the TOV equations and comparing the results of static solutions, mass-radius curves, and mass-pressure curves to other, previously calculated equations of state. An in-depth description of the TOV equations and their implementation is given in \autoref{ch: static solutions}.
 
-To begin, we choose a value of $k_f$ for the entirety of the iteration; for sake of example, we take $k_f = 1$. Then, we find the value of $\phi_0$ for that $k_f$ value. We define a function in Python for $\phi_0$ from \eqref{eqn: rmf,phi0}. This is given between below.
+To begin, we choose a value of $k_f$ for the entirety of the iteration; then, we find the value of $\phi_0$ for that $k_f$ value. We define a function in Python for $\phi_0$ from \eqref{eqn: rmf,phi0}, given below.
 
 \begin{lstlisting}
 def f_phi0(phi0, kf):
@@ -261,8 +261,8 @@ for kf in kfs:
     phi0_guess = phi0
 \end{lstlisting}
 
-By the above code block, we now calculate numerical values for $P$ and $\epsilon$. We create an array of $k_f$ values, and loop through each. During every iteration, we calculate the root of the $\phi_0$ function, which gives us $\phi_0$, and we use that value, as well as the value of $V_0$ to determine the values of $P$ and $\epsilon$.  These values are saved and written to file. Notably, our root finding needs an initial guess, so we use the previously determined value of $\phi_0$ as the guess for the current iteration, as we know it will be relatively close.
+By the above code block, we now calculate numerical values for $P$ and $\epsilon$. We create an array of $k_f$ values and loop through each. During every iteration, we calculate the root of the $\phi_0$ function, which gives us $\phi_0$, and we use that value, as well as the value of $V_0$ to determine the values of $P$ and $\epsilon$.  These values are saved and written to file. Notably, our root finding needs an initial guess, so we use the previously determined value of $\phi_0$ as the guess for the current iteration, as we know it will be relatively close.
 
-After tabulating values for this QHD-1 equation of state, we can create mass-radius and mass-pressure curves, as derived in \autoref{ch: static solutions}. This produces the results given in \autoref{fig: qhd1 mass radius pressure}. From these plots and this analysis, we calculate the critical (maximum) mass that this EOS predicts to be \SI{6.1}{\odot} with a critical radius of \SI{42.1}{km}. 
+After tabulating values for this QHD-1 equation of state, we can create mass-radius and mass-pressure curves as derived in \autoref{ch: static solutions}. This produces the results given in \autoref{fig: qhd1 mass radius pressure}. From these plots and this analysis, we calculate the critical (maximum) mass that this EOS predicts to be \SI{6.1}{\odot} with a critical radius of \SI{42.1}{km}. 
 
-Importantly, theses critical mass and critical radius values are noticeably larger than those given for the SLy family of EOSs. This is because the QHD-I EOS is not considered a ``realistic'' EOS, due to the extensive simplifications that it makes. Furthermore, the solution that we calculated here had the RMF simplifications, on top of the QHD-I simplifications, so this EOS should not be expected to give values that realistically predict neutron stars. This EOS instead was used as a teaching aid for how to effectively apply a theoretical model to numerically calculate an EOS and use that EOS to make predictions about the observable properties of the neutron stars it describes.
+Importantly, these critical mass and critical radius values are noticeably larger than those given for the SLy family of EOSs. This is because the QHD-I EOS is not considered a ``realistic'' EOS due to the extensive simplifications that it makes. Furthermore, the solution that we calculated here had the RMF simplifications, on top of the QHD-I simplifications, so this EOS should not be expected to give values that realistically predict neutron stars. This EOS instead was used as a teaching aid for how to effectively apply a theoretical model to numerically calculate an EOS and use that EOS to make predictions about the observable properties of the neutron stars it describes.

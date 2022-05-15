@@ -31,7 +31,7 @@ The additional coupling constants arise from allowing higher order terms in $V_\
 
 Intuitively, including additional meson fields and higher order couplings will make the Lagrangian more accurate, while at the same time more complicated. These extra terms better model the meson exchange and the interactions between the fields, but at the expense of computability.
 
-For this system, we introduce once again introduce the relativistic mean field (RMF) simplifications, where we take all fields to be their average values. These simplifications are
+For this system, we once again introduce the relativistic mean field (RMF) simplifications, where we take all fields to be their average values. These simplifications are
 \begin{align}
     \phi &\goesto \bra{\Phi} \phi \ket{\Phi} = \expval{\phi} \Def \phi_0, \\
     V^\mu & \goesto \bra{\Phi} V^\mu \ket{\Phi} = \expval{V^\mu} \Def \delta^{\mu 0} V_0,\\
@@ -106,7 +106,7 @@ Furthermore, within neutron stars, there is a third reaction in which a muon dec
     \mu_\mu = \mu_e,\quad \mu_e  = \sqrt{k_e^2 + m_e^2}, \quad \mu_\mu  = \sqrt{k_\mu^2 + m_\mu^2}.
 \end{align}
 
-Our final constraint is charge conservation; because muons and electrons have equal charges, opposite protons, this constraint takes the form
+Our final constraint is charge conservation; because muons and electrons have equal charges, opposite that of protons, this constraint takes the form
 \begin{align}\label{eqn: adv, charge conservation}
     \rho_p = \rho_e + \rho_\mu \goesto k_p = \pqty{k_e^3 + k_\mu^3}^{1/3}.
 \end{align}
@@ -115,7 +115,7 @@ These four constraint equations, \eqref{eqn: adv, conservation of number density
 
 \section{Numerical Generation of the Equation of State}\label{sec: adv, gen}
 
-Within this section, important code blocks will be included for reading convenience; however, any line numbers will reference the complete code sample givben at the conclusion of this paper in \autoref{ch: advanced code}.
+Within this section, important code blocks will be included for reading convenience; however, any line numbers will reference the complete code sample given at the conclusion of this paper in \autoref{ch: advanced code}.
 
 This section will describe the procedure for numerically calculating the equation of state from the constraint equations in \autoref{sec: adv, constraints} and the equations of motion in \autoref{sec: adv, eom}, and then the following process for computing $\epsilon$ and $P$.
 
@@ -171,11 +171,11 @@ def ns_system(vec, rho):
     ])
 \end{lstlisting}
 
-Therefore, we created a function for the evolution of the system of equations included in \autoref{sec: adv, constraints} and \autoref{sec: adv, eom} called \code{ns\_system}, shown above. This function was to be passed to \code{least\_squares} as the evolution function. \code{least\_squares} requires a function whose argument is a vector\footnote{Our function has two parameters; the first is a vector, and the second is a parameter $\rho$ necessary for determining the rest of the values within this evolution equation. The SciPy solver (which will be shown later) allows for additional arguments to be passed by using the \code{args} keyword and passing a list of arguments in the order they should be passed; this is how the value of $\rho$ is injected to \code{ns\_system} throughout its calls.} (tuple) containing all the variables whose solution we are looking for, with a return value of an array containing the \textit{residuals} of the equations in the system. The solver then minimizes the system of residuals as a system and returns a vector containing the value of the variables that \textit{caused} that minimum condition, the solution that we are looking for.
+Therefore, we created a function for the evolution of the system of equations included in \autoref{sec: adv, eom} and \autoref{sec: adv, constraints} called \code{ns\_system}, shown above. This function was to be passed to \code{least\_squares} as the evolution function. \code{least\_squares} requires a function whose argument is a vector\footnote{Our function has two parameters; the first is a vector, and the second is a parameter $\rho$ necessary for determining the rest of the values within this evolution equation. The SciPy solver (which will be shown later) allows for additional arguments to be passed by using the \code{args} keyword and passing a list of arguments in the order they should be passed; this is how the value of $\rho$ is injected to \code{ns\_system} throughout its calls.} (tuple) containing all the variables whose solution we are looking for, with a return value of an array containing the \textit{residuals} of the equations in the system. The solver then minimizes the system of residuals as a system and returns a vector containing the value of the variables that \textit{caused} that minimum condition, the solution that we are looking for.
 
 Our \code{ns\_system} function, therefore, was written to satisfy these conditions. First, the variable \code{vec} contains the seven variables whose values we want to determine: $\rho_n, \rho_p, \rho_e, \rho_\mu,$ $\phi_0,$  $V_0,$ and $b_0$. Importantly, by decision, we decide to determine the number densities ($\rho_x$) of the different species of particles present, and not the corresponding Fermi-momentas ($k_x$). From the known information, then calculate the Fermi-momentum of each particle, the chemical potentials $\mu_\mu$ and $\mu_e$, the reduced mass $m^*$, and the integrals present in the $\phi_0$ equation; once again, the integrals are calculated numerically using the SciPy \code{quad} function. Then, each of the equations mentioned above are implemented as a residual by subtracting the right-hand side of the equation to find an expression equal to zero. During the minimization, the residual is squared and minimized, and the resulting solution values of the vector are returned by \code{least\_squares}.
 
-After the definition of \code{ns\_system}, we implement another sister function named \code{ns\_sy-} \code{stem\_no\_muons}. There comes a point during the evolution when the muon Fermi-momenta, defined by $k_\mu = \sqrt{\mu_\mu^2 - m_\mu^2},$ becomes imaginary; at this point, no more muons are produced, and the evolution should no longer include muons at all. In this function, the parameter \code{vec} does not include $\rho_\mu$ and does not contain the residual $\mu_\mu = \mu_e$, the equivalence of chemical potentials between electrons and muons. Once $k_\mu$ becomes close enough to zero, we begin evolving this function instead; this will be specifically shown below.
+After the definition of \code{ns\_system}, we implement another sister function named \code{ns\_sy-} \code{stem\_no\_muons}. There comes a point during the evolution when the muon Fermi-momenta, defined by $k_\mu = \sqrt{\mu_\mu^2 - m_\mu^2},$ becomes imaginary; at this point, no more muons are produced, and the evolution should no longer include muons at all. In this function, the parameter \code{vec} does not include $\rho_\mu$ and does not contain the residual $\mu_\mu = \mu_e$, the equivalence of chemical potentials between electrons and muons. Once $k_\mu$ becomes close enough to zero, we begin evolving this function instead; this switch will be specifically outlined below.
 
 \begin{lstlisting}
 def eps(vec):
@@ -188,7 +188,7 @@ def eps(vec):
     # omitted ...
 \end{lstlisting}
 
-After this point, we define both the $\epsilon$ and $P$ functions; the beginning of the $\epsilon$ function is shown above, though the $P$ function has the same initial form and simply performs some different calculations in its body. Importantly, both functions are equipped to handle both the muon and non-muon cases; this is handled by the lines shown above. If the vector only contains six variables, it means that muons are not currently being produced, so the muon number density $\rho_\mu$ should be zero; otherwise, we should unpack the vector as expected. In the body of the function, in the ``omitted'' section, both functions carry out numerical integrations and simple numerical calculations to return the values of $\epsilon$ and $P$.
+After this point, we define both the $\epsilon$ and $P$ functions; the beginning of the $\epsilon$ function is shown above, while the $P$ function is omitted, as it has the same initial form and simply performs some different calculations in its body. Importantly, both functions are equipped to handle both the muon and non-muon cases; this is shown by the lines above. If the vector only contains six variables, it means that muons are not currently being produced, so the muon number density $\rho_\mu$ should be zero; otherwise, we should unpack the vector as expected. In the body of the function, in the ``omitted'' section, both functions carry out numerical integrations and simple numerical calculations to return the values of $\epsilon$ and $P$.
 
 \begin{lstlisting}
 rho_exp = np.linspace(-1, -5, 5000)
